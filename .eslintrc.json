@@ -1,0 +1,21 @@
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  "extends": [
+    "google",
+    "plugin:react/recommended"
+  ],
+  "rules": {
+    "require-jsdoc": 0,
+    "max-len": 0,
+    "arrow-parens": 0,
+    "linebreak-style": 0,
+    "object-curly-spacing": 0
+  }
+}
