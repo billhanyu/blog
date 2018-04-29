@@ -1,8 +1,11 @@
 const passport = require('passport');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const express = require('express');
+const router = new express.Router();
+const auth = require('../auth');
 
-export function signup(req, res, next) {
+router.post('/signup', (req, res, next) => {
   const user = new User();
 
   user.name = req.body.name;
@@ -10,24 +13,26 @@ export function signup(req, res, next) {
 
   user.setPassword(req.body.password);
 
-  user.save(function(err) {
-    let token;
-    token = user.generateJwt();
-    res.status(200);
-    res.json({
-      token,
-    });
-  });
-}
+  user.save()
+    .then(() => {
+      let token;
+      token = user.generateJwt();
+      res.status(200);
+      res.json({
+        token,
+      });
+    })
+    .catch(err => next(err));
+});
 
-export function login(req, res, next) {
+// format is Authorization: Bearer [token]
+router.post('/login', auth, (req, res, next) => {
   passport.authenticate('local', function(err, user, info) {
     let token;
 
     // If Passport throws/catches an error
     if (err) {
-      res.status(404).json(err);
-      return;
+      return next(err);
     }
 
     // If a user is found
@@ -42,9 +47,9 @@ export function login(req, res, next) {
       res.status(401).json(info);
     }
   })(req, res);
-}
+});
 
-export function profile(req, res, next) {
+router.get('/profile', auth, (req, res, next) => {
   // If no user ID exists in the JWT return a 401
   if (!req.payload._id) {
     res.status(401).json({
@@ -55,7 +60,12 @@ export function profile(req, res, next) {
     User
       .findById(req.payload._id)
       .exec((err, user) => {
+        if (err) {
+          return next(err);
+        }
         res.status(200).json(user);
       });
   }
-}
+});
+
+module.exports = router;

@@ -2,20 +2,29 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const credentials = require('../getCredentials')();
+const uniqueValidator = require('mongoose-unique-validator');
 
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
+    lowercase: true,
     unique: true,
-    required: true,
+    required: [true, 'can\'t be blank'],
+    match: [/\S+@\S+\.\S+/, 'is invalid'],
+    index: true,
   },
   name: {
     type: String,
-    required: true,
+    lowercase: true,
+    required: [true, 'can\'t be blank'],
+    match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
+    index: true,
   },
   hash: String,
   salt: String,
 });
+
+userSchema.plugin(uniqueValidator, { message: 'is already taken.' });
 
 userSchema.methods.setPassword = function(password) {
   this.salt = crypto.randomBytes(16).toString('hex');
@@ -36,7 +45,7 @@ userSchema.methods.generateJwt = function() {
     email: this.email,
     name: this.name,
     exp: parseInt(expiry.getTime() / 1000),
-  }, credentials.secret); // DO NOT KEEP YOUR SECRET IN THE CODE!
+  }, credentials.secret);
 };
 
 mongoose.model('User', userSchema);
