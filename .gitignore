@@ -10,6 +10,9 @@
 /build
 /dist
 
+# credentials
+/server/credentials.js
+
 # misc
 .DS_Store
 .env.local
