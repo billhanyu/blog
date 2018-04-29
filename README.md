@@ -28,3 +28,7 @@ Frontend hot reloading is enabled!
 2. `npm run build` to build frontend to `/dist`
 3. Use whatever process management tool to start `build/server.js`
 4. Use whatever serving tool to serve `/dist`
+
+## Articles Referenced
+
+- [User Auth Using MongoDB and MEAN Stack](https://www.sitepoint.com/user-authentication-mean-stack/)
