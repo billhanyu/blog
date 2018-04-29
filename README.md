@@ -1,5 +1,7 @@
 # Blog
 
+[![Build Status](https://travis-ci.org/billhanyu/blog.svg?branch=master)](https://travis-ci.org/billhanyu/blog)
+
 Blog built with React+Express+MongoDB.
 
 Frontend:
