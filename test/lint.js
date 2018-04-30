@@ -23,7 +23,7 @@ const options = {
   slow: 1000, // Defaults to the global mocha `slow` option
 
   // Consider linting warnings as errors and return failure
-  strict: true, // Defaults to `false`, only notify the warnings
+  strict: false, // Defaults to `false`, only notify the warnings
 
   // Specify the mocha context in which to run tests
   contextName: 'eslint', // Defaults to `eslint`, but can be any string

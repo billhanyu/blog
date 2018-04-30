@@ -52,8 +52,6 @@ router.get('/', (req, res, next) => {
     .then(results => {
       const posts = results[0];
       const user = results[1];
-      console.log(posts);
-      console.log(user);
       res.json(posts.map(post => post.toJSONFor(user)));
     })
     .catch(next);
@@ -61,7 +59,6 @@ router.get('/', (req, res, next) => {
 
 // get one post
 router.get('/:post', (req, res, next) => {
-  console.log(req.post);
   res.json(req.post.toJSONFor(null));
 });
 
