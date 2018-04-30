@@ -1,6 +1,7 @@
 # Blog
 
 [![Build Status](https://travis-ci.org/billhanyu/blog.svg?branch=master)](https://travis-ci.org/billhanyu/blog)
+[![Coverage Status](https://coveralls.io/repos/github/billhanyu/blog/badge.svg?branch=master)](https://coveralls.io/github/billhanyu/blog?branch=master)
 
 Blog built with React+Express+MongoDB.
 
