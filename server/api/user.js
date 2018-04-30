@@ -67,6 +67,9 @@ router.get('/profile', auth, (req, res, next) => {
         if (err) {
           return next(err);
         }
+        if (!user) {
+          return res.status(404).json('User does not exist');
+        }
         res.status(200).json(user);
       });
   }

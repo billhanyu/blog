@@ -1,5 +1,17 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const jwt = require('jsonwebtoken');
+const credentials = require('../server/getCredentials')();
+
+// some random token
+const expiry = new Date();
+expiry.setDate(expiry.getDate() + 7);
+const randomToken = jwt.sign({
+  // no _id field
+  email: 'han.yu@duke.edu',
+  name: 'Bill Yu',
+  exp: parseInt(expiry.getTime() / 1000),
+}, credentials.secret);
 
 const injectUser = (email, name, password) => {
   const user = new User({
@@ -27,6 +39,21 @@ describe('user', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('token');
+          done();
+        });
+    });
+
+    it('should reject password less than 6 characters', (done) => {
+      chai.request(server)
+        .post('/user/signup')
+        .send({
+          email: 'han.yu@duke.edu',
+          name: 'yuhan',
+          password: 'passw',
+        })
+        .end((err, res) => {
+          res.should.have.status(422);
+          assert.equal(res.body.message, 'password needs to be at least 6 characters');
           done();
         });
     });
@@ -116,7 +143,8 @@ describe('user', () => {
     let token;
 
     before((done) => {
-      injectUser('lucy.zhang@duke.edu', 'Lucy Zhang', 'password')
+      User.deleteMany({}).exec()
+        .then(() => injectUser('lucy.zhang@duke.edu', 'Lucy Zhang', 'password'))
         .then(lucy => {
           token = lucy.generateJwt();
           done();
@@ -143,12 +171,34 @@ describe('user', () => {
       chai.request(server)
         .get('/user/profile')
         .set({
-          Authorization: 'Bearer ' + 'invalidtoken',
+          Authorization: 'Bearer ' + randomToken,
         })
         .end((err, res) => {
           res.should.have.status(401);
           done();
         });
+    });
+
+    it('should return 404 for invalid _id in token', (done) => {
+      let invalidToken;
+
+      injectUser('han.yu@duke.edu', 'Bill Yu', 'password')
+        .then(bill => {
+          invalidToken = bill.generateJwt();
+          return User.deleteOne({ email: 'han.yu@duke.edu'}).exec();
+        })
+        .then(() => {
+          chai.request(server)
+            .get('/user/profile')
+            .set({
+              Authorization: 'Bearer ' + invalidToken,
+            })
+            .end((err, res) => {
+              res.should.have.status(404);
+              done();
+            });
+        })
+        .catch(err => done(err));
     });
   });
 });

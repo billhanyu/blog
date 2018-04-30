@@ -13,3 +13,14 @@ before((done) => {
     .then(() => mongoose.connection.db.dropDatabase(done))
     .catch(err => done(err));
 });
+
+describe('404', () => {
+  it('should 404 for undefined routes', (done) => {
+    chai.request(server)
+      .get('/illneverusethisroute')
+      .end((err, res) => {
+        res.should.have.status(404);
+        done();
+      });
+  });
+});
