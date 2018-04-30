@@ -4,13 +4,14 @@ const jwt = require('jsonwebtoken');
 const credentials = require('../getCredentials')();
 const uniqueValidator = require('mongoose-unique-validator');
 
-const userSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   email: {
     type: String,
     lowercase: true,
     unique: true,
     required: [true, 'can\'t be blank'],
     match: [/\S+@\S+\.\S+/, 'is invalid'],
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     index: true,
   },
   name: {
@@ -25,19 +26,19 @@ const userSchema = new mongoose.Schema({
   salt: String,
 });
 
-userSchema.plugin(uniqueValidator, { message: 'is already taken.' });
+UserSchema.plugin(uniqueValidator, { message: 'is already taken.' });
 
-userSchema.methods.setPassword = function(password) {
+UserSchema.methods.setPassword = function(password) {
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
 };
 
-userSchema.methods.validPassword = function(password) {
+UserSchema.methods.validPassword = function(password) {
   const hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
   return this.hash === hash;
 };
 
-userSchema.methods.generateJwt = function() {
+UserSchema.methods.generateJwt = function() {
   const expiry = new Date();
   expiry.setDate(expiry.getDate() + 7);
 
@@ -49,4 +50,30 @@ userSchema.methods.generateJwt = function() {
   }, credentials.secret);
 };
 
-mongoose.model('User', userSchema);
+UserSchema.methods.toProfileJSON = function(user) {
+  return {
+    email: this.email,
+    name: this.name,
+    admin: this.admin,
+  };
+};
+
+UserSchema.methods.like = function(postId) {
+  if (this.likes.indexOf(postId) === -1) {
+    this.likes.push(postId);
+  }
+  return this.save();
+};
+
+UserSchema.methods.unfavorite = function(postId) {
+  this.likes.remove(postId);
+  return this.save();
+};
+
+UserSchema.methods.isFavorite = function(postId) {
+  return this.likes.some(function(likeId) {
+    return likeId.toString() === postId.toString();
+  });
+};
+
+mongoose.model('User', UserSchema);

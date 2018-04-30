@@ -15,7 +15,9 @@ global.transporter = nodemailer.createTransport({
 });
 
 // mongodb models
-require('./models/users');
+require('./models/User');
+require('./models/Post');
+require('./models/Comment');
 require('./passport');
 
 // mongo init

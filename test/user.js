@@ -179,7 +179,7 @@ describe('user', () => {
         });
     });
 
-    it('should return 404 for invalid _id in token', (done) => {
+    it('should return 401 for invalid _id in token', (done) => {
       let invalidToken;
 
       injectUser('han.yu@duke.edu', 'Bill Yu', 'password')
@@ -194,7 +194,7 @@ describe('user', () => {
               Authorization: 'Bearer ' + invalidToken,
             })
             .end((err, res) => {
-              res.should.have.status(404);
+              res.should.have.status(401);
               done();
             });
         })

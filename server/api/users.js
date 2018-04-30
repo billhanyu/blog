@@ -53,7 +53,7 @@ router.post('/login', (req, res, next) => {
   })(req, res);
 });
 
-router.get('/profile', auth, (req, res, next) => {
+router.get('/profile', auth.noob, (req, res, next) => {
   // If no user ID exists in the JWT return a 401
   if (!req.payload._id) {
     res.status(401).json({
@@ -61,17 +61,15 @@ router.get('/profile', auth, (req, res, next) => {
     });
   } else {
     // Otherwise continue
-    User
-      .findById(req.payload._id)
-      .exec((err, user) => {
-        if (err) {
-          return next(err);
-        }
-        if (!user) {
-          return res.status(404).json('User does not exist');
-        }
-        res.status(200).json(user);
-      });
+    User.findById(req.payload._id).exec()
+      .then(user => {
+        // auth.noob ensures user exists
+        // if (!user) {
+        //   return res.status(404).json('User does not exist');
+        // }
+        res.status(200).json(user.toProfileJSON());
+      })
+      .catch(err => next(err));
   }
 });
 
