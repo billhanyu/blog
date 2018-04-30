@@ -2,6 +2,7 @@ const express = require('express');
 const router = new express.Router();
 
 router.use('/user', require('./users'));
+router.use('/posts', require('./posts'));
 
 // error handlers
 // Catch unauthorised errors

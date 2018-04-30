@@ -16,7 +16,6 @@ const PostSchema = new mongoose.Schema({
 PostSchema.plugin(uniqueValidator, { message: 'is already taken' });
 
 PostSchema.pre('validate', function(next) {
-  console.log(this);
   if (!this.slug) {
     this.slugify();
   }
@@ -49,7 +48,7 @@ PostSchema.methods.toJSONFor = function(user) {
     tagList: this.tagList,
     liked: user ? user.isFavorite(this._id) : false,
     likeCount: this.likeCount,
-    author: this.author.toProfileJSONFor(user),
+    author: this.author.toProfileJSON(),
   };
 };
 

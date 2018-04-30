@@ -18,6 +18,7 @@ function userQuery(req, res, next, admin) {
       if (admin && !user.admin) {
         return res.status(401).send('This action requires admin access');
       }
+      req.user = user;
       next();
     })
     .catch(next);

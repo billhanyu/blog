@@ -54,23 +54,7 @@ router.post('/login', (req, res, next) => {
 });
 
 router.get('/profile', auth.noob, (req, res, next) => {
-  // If no user ID exists in the JWT return a 401
-  if (!req.payload._id) {
-    res.status(401).json({
-      message: 'UnauthorizedError: private profile',
-    });
-  } else {
-    // Otherwise continue
-    User.findById(req.payload._id).exec()
-      .then(user => {
-        // auth.noob ensures user exists
-        // if (!user) {
-        //   return res.status(404).json('User does not exist');
-        // }
-        res.status(200).json(user.toProfileJSON());
-      })
-      .catch(err => next(err));
-  }
+  res.status(200).json(req.user.toProfileJSON());
 });
 
 module.exports = router;

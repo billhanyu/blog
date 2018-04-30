@@ -50,7 +50,7 @@ UserSchema.methods.generateJwt = function() {
   }, credentials.secret);
 };
 
-UserSchema.methods.toProfileJSON = function(user) {
+UserSchema.methods.toProfileJSON = function() {
   return {
     email: this.email,
     name: this.name,
