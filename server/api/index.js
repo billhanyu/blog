@@ -8,7 +8,12 @@ router.use('/user', require('./user'));
 router.use((err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {
     res.status(401);
-    res.json({ 'message': err.name + ': ' + err.message });
+    res.json({ message: err.name + ': ' + err.message });
+  } else if (err.name === 'ValidationError') {
+    const key = Object.keys(err.errors)[0];
+    return res.status(422).json({
+      message: key + ' ' + err.errors[key],
+    });
   }
   next(err);
 });

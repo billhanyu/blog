@@ -11,6 +11,10 @@ router.post('/signup', (req, res, next) => {
   user.name = req.body.name;
   user.email = req.body.email;
 
+  if (req.body.password.length < 6) {
+    return res.status(422).json({message: 'password needs to be at least 6 characters'});
+  }
+
   user.setPassword(req.body.password);
 
   user.save()
@@ -26,7 +30,7 @@ router.post('/signup', (req, res, next) => {
 });
 
 // format is Authorization: Bearer [token]
-router.post('/login', auth, (req, res, next) => {
+router.post('/login', (req, res, next) => {
   passport.authenticate('local', function(err, user, info) {
     let token;
 

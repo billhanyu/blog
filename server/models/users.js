@@ -15,10 +15,11 @@ const userSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    lowercase: true,
-    required: [true, 'can\'t be blank'],
-    match: [/^[a-zA-Z0-9]+$/, 'is invalid'],
     index: true,
+  },
+  admin: {
+    type: Boolean,
+    default: false,
   },
   hash: String,
   salt: String,
