@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "cross-env NODE_ENV=test nyc mocha --file test/test.js --timeout 6666 --require babel-polyfill --require babel-register --exit && nyc report --reporter=text-lcov | coveralls",
+    "test": "cross-env NODE_ENV=test nyc mocha --file test/test.js --timeout 6666 --require babel-polyfill --require babel-register --exit && nyc report --reporter=html --reporter=text-lcov | coveralls",
     "server": "cross-env NODE_ENV=development nodemon --exec babel-node server/server.js",
     "build-server": "cross-env NODE_ENV=production babel -d ./build ./server -s"
   },
