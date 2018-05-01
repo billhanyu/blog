@@ -11,6 +11,9 @@ function noobRequired(req, res, next) {
 
 // req.user can be null
 function noneRequired(req, res, next) {
+  if (!req.payload) {
+    return next();
+  }
   User.findById(req.payload._id).exec()
     .then(user => {
       req.user = user;

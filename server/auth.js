@@ -5,9 +5,14 @@ const auth = jwt({
   secret: credentials.secret,
   userProperty: 'payload',
 });
+const optional = jwt({
+  secret: credentials.secret,
+  userProperty: 'payload',
+  credentialsRequired: false,
+});
 
 module.exports = {
-  none: [auth, noneRequired],
+  none: [optional, noneRequired],
   admin: [auth, adminRequired],
   noob: [auth, noobRequired],
 };
