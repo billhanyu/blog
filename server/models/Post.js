@@ -26,7 +26,7 @@ PostSchema.methods.slugify = function() {
   this.slug = slug(this.title) + '-' + (Math.random() * Math.pow(36, 6) | 0).toString(36);
 };
 
-PostSchema.methods.updateFavoriteCount = function() {
+PostSchema.methods.updateLikes = function() {
   const post = this;
 
   return User.count({ likes: { $in: [post._id] } }).then(function(count) {

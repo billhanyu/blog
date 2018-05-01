@@ -99,6 +99,7 @@ router.delete('/:post', auth.admin, (req, res, next) => {
 // like a post
 router.post('/:post/like', auth.noob, (req, res, next) => {
   req.user.like(req.post._id)
+    .then(() => req.post.updateLikes())
     .then(() => res.sendStatus(200))
     .catch(next);
 });
@@ -106,6 +107,7 @@ router.post('/:post/like', auth.noob, (req, res, next) => {
 // unlike a post
 router.delete('/:post/like', auth.noob, (req, res, next) => {
   req.user.unlike(req.post._id)
+    .then(() => req.post.updateLikes())
     .then(() => res.sendStatus(200))
     .catch(next);
 });
