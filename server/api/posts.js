@@ -18,7 +18,11 @@ router.param('post', (req, res, next, slug) => {
 });
 
 router.param('comment', (req, res, next, id) => {
-  Comment.findById(id).exec()
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.sendStatus(404);
+  }
+
+  Comment.findById(id).populate('author').exec()
     .then(comment => {
       if (!comment) {
         return res.sendStatus(404);
@@ -113,10 +117,14 @@ router.delete('/:post/like', auth.noob, (req, res, next) => {
 });
 
 router.get('/:post/comments', auth.none, (req, res, next) => {
-  Promise.all(req.post.comments.map(commentId => Comment.findById(commentId).populate('author').exec()))
+  Promise.all(req.post.comments.map(commentId => {
+    return Comment.findById(commentId)
+      .populate('author')
+      .sort({ createdAt: 'asc' })
+      .exec();
+  }))
     .then(results => {
-      console.log(results);
-      return res.json(results);
+      return res.json(results.map(comment => comment.toJSON()));
     })
     .catch(next);
 });
@@ -144,6 +152,9 @@ router.post('/:post/comments', auth.noob, (req, res, next) => {
 // update a comment
 router.put('/:post/comments/:comment', auth.noob, (req, res, next) => {
   const body = req.body.body;
+  if (req.comment.author._id.toString() !== req.user._id.toString() && !req.user.admin) {
+    return res.sendStatus(403);
+  }
   if (!body) {
     return res.status(422).send('Comment cannot be empty');
   }
@@ -155,7 +166,12 @@ router.put('/:post/comments/:comment', auth.noob, (req, res, next) => {
 
 // delete a comment
 router.delete('/:post/comments/:comment', auth.noob, (req, res, next) => {
-  req.comment.remove()
+  if (req.comment.author._id.toString() !== req.user._id.toString() && !req.user.admin) {
+    return res.sendStatus(403);
+  }
+  req.post.comments.remove(req.comment._id);
+  req.post.save()
+    .then(() => req.comment.remove())
     .then(() => res.sendStatus(200))
     .catch(next);
 });

@@ -24,6 +24,13 @@ describe('posts', () => {
       .catch(done);
   });
 
+  after(() => {
+    return Promise.all([
+      User.deleteMany({}).exec(),
+      Post.deleteMany({}).exec(),
+    ]);
+  });
+
   describe('GET posts/', () => {
     let firstPost;
 
