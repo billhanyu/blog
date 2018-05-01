@@ -11,13 +11,13 @@ const UserSchema = new mongoose.Schema({
     unique: true,
     required: [true, 'can\'t be blank'],
     match: [/\S+@\S+\.\S+/, 'is invalid'],
-    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     index: true,
   },
   name: {
     type: String,
     index: true,
   },
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
   admin: {
     type: Boolean,
     default: false,
@@ -65,12 +65,12 @@ UserSchema.methods.like = function(postId) {
   return this.save();
 };
 
-UserSchema.methods.unfavorite = function(postId) {
+UserSchema.methods.unlike = function(postId) {
   this.likes.remove(postId);
   return this.save();
 };
 
-UserSchema.methods.isFavorite = function(postId) {
+UserSchema.methods.didLike = function(postId) {
   return this.likes.some(function(likeId) {
     return likeId.toString() === postId.toString();
   });

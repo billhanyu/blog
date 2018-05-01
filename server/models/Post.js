@@ -19,7 +19,6 @@ PostSchema.pre('validate', function(next) {
   if (!this.slug) {
     this.slugify();
   }
-
   next();
 });
 
@@ -46,7 +45,7 @@ PostSchema.methods.toJSONFor = function(user) {
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
     tagList: this.tagList,
-    liked: user ? user.isFavorite(this._id) : false,
+    liked: user ? user.didLike(this._id) : false,
     likeCount: this.likeCount,
     author: this.author.toProfileJSON(),
   };

@@ -3,6 +3,8 @@ const User = mongoose.model('User');
 const jwt = require('jsonwebtoken');
 const credentials = require('../server/getCredentials')();
 
+const { injectUser } = require('./tools');
+
 // some random token
 const expiry = new Date();
 expiry.setDate(expiry.getDate() + 7);
@@ -12,15 +14,6 @@ const randomToken = jwt.sign({
   name: 'Bill Yu',
   exp: parseInt(expiry.getTime() / 1000),
 }, credentials.secret);
-
-const injectUser = (email, name, password) => {
-  const user = new User({
-    email,
-    name,
-  });
-  user.setPassword(password);
-  return user.save();
-};
 
 describe('user', () => {
   describe('user sign up', () => {

@@ -7,7 +7,7 @@ const CommentSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Requires population of author
-CommentSchema.methods.toJSON = function(user) {
+CommentSchema.methods.toJSON = function() {
   return {
     id: this._id,
     body: this.body,
