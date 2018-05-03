@@ -18,22 +18,22 @@ class App extends Component {
         <Router>
           <MuiThemeProvider>
             <div>
-            <NavigationMenu />
-            <Switch>
-              <Route
-                name='home'
-                exact path='/'
-                component={Home}
-              />
-              <Route
-                name='profile'
-                path='/profile'
-                component={Profile}
-              />
-              <Route
-                component={NoMatch}
-              />
-            </Switch>
+              <NavigationMenu />
+              <Switch>
+                <Route
+                  name='home'
+                  exact path='/'
+                  component={Home}
+                />
+                <Route
+                  name='profile'
+                  path='/profile'
+                  component={Profile}
+                />
+                <Route
+                  component={NoMatch}
+                />
+              </Switch>
             </div>
           </MuiThemeProvider>
         </Router>
