@@ -14,7 +14,10 @@ const Logged = props => (
     anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
   >
     <MenuItem primaryText="Profile" />
-    <MenuItem primaryText="Sign out" />
+    <MenuItem
+      primaryText="Sign out"
+      onClick={() => location.reload()}
+    />
   </IconMenu>
 );
 
