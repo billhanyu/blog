@@ -1,5 +1,6 @@
-function root(state={}, action) {
-  return state;
-}
+import { combineReducers } from 'redux';
+import user from './user';
 
-export default root;
+export default combineReducers({
+  user,
+});

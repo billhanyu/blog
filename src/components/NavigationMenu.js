@@ -8,6 +8,9 @@ import Home from 'material-ui/svg-icons/action/home';
 import Account from 'material-ui/svg-icons/action/account-circle';
 const { blogName, githubLink } = require('../config');
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Logged from './user/Logged';
+import LogInButton from './user/LogInButton';
 
 const SelectableList = makeSelectable(List);
 
@@ -18,7 +21,7 @@ class NavigationMenu extends Component {
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.state = {
-      selectedIndex: 1,
+      selectedIndex: props.selectedIndex,
       open: false,
     };
   }
@@ -89,6 +92,7 @@ class NavigationMenu extends Component {
         <AppBar
           title={blogName}
           onLeftIconButtonClick={this.handleToggle}
+          iconElementRight={this.props.token ? <Logged /> : <LogInButton />}
         />
       </div>
     );
@@ -97,6 +101,14 @@ class NavigationMenu extends Component {
 
 NavigationMenu.propTypes = {
   history: PropTypes.object,
+  selectedIndex: PropTypes.number.isRequired,
+  token: PropTypes.string,
 };
 
-export default withRouter(NavigationMenu);
+const mapStateToProps = state => {
+  return {
+    token: state.user.token,
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(NavigationMenu));

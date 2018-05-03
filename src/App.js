@@ -5,9 +5,11 @@ import configureStore from './configureStore';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './components/routes/Home';
 import Profile from './components/routes/Profile';
+import Post from './components/routes/Post';
 import NoMatch from './components/routes/NoMatch';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import NavigationMenu from './components/NavigationMenu';
+import LogIn from './components/routes/LogIn';
+import SignUp from './components/routes/SignUp';
 
 const store = configureStore();
 
@@ -18,7 +20,6 @@ class App extends Component {
         <Router>
           <MuiThemeProvider>
             <div>
-              <NavigationMenu />
               <Switch>
                 <Route
                   name='home'
@@ -29,6 +30,21 @@ class App extends Component {
                   name='profile'
                   path='/profile'
                   component={Profile}
+                />
+                <Route
+                  name='post'
+                  path='/posts/:post'
+                  component={Post}
+                />
+                <Route
+                  name='login'
+                  path='/login'
+                  component={LogIn}
+                />
+                <Route
+                  name='signup'
+                  path='/signup'
+                  component={SignUp}
                 />
                 <Route
                   component={NoMatch}
