@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class Category extends Component {
+class Profile extends Component {
   render() {
     return (
       <div>
-        <h1>Category {this.props.match.params.category}</h1>
+        <h1>Profile</h1>
       </div>
     );
   }
 }
 
-Category.propTypes = {
+Profile.propTypes = {
   match: PropTypes.object,
 };
 
-export default Category;
+export default Profile;
