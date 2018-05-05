@@ -11,13 +11,13 @@ function posts(state={
     case SINGLEPOST:
       return {
         ...state,
-        current: action.payload,
+        current: action.payload.post || {},
         error: action.payload.error,
       };
     case ALLPOSTS:
       return {
         ...state,
-        all: action.payload,
+        all: action.payload.posts || [],
         error: action.payload.error,
       };
     default:

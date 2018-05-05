@@ -53,8 +53,8 @@ describe('posts', () => {
         .set({ Authorization: 'Bearer ' + adminToken })
         .end((err, res) => {
           res.should.have.status(200);
-          assert.equal(res.body.length, 2);
-          assert.equal(res.body[1].liked, true);
+          assert.equal(res.body.posts.length, 2);
+          assert.equal(res.body.posts[1].liked, true);
           done();
         });
     });
@@ -65,8 +65,8 @@ describe('posts', () => {
         .query({ tagList: JSON.stringify(['tag2']) })
         .end((err, res) => {
           res.should.have.status(200);
-          assert.equal(res.body.length, 1);
-          assert.equal(res.body[0].title, 'title');
+          assert.equal(res.body.posts.length, 1);
+          assert.equal(res.body.posts[0].title, 'title');
           done();
         });
     });
@@ -77,9 +77,9 @@ describe('posts', () => {
         .query({ offset: 1 })
         .end((err, res) => {
           res.should.have.status(200);
-          assert.equal(res.body.length, 1);
+          assert.equal(res.body.posts.length, 1);
           // order by descending, so the first one added is here
-          assert.equal(res.body[0].title, 'title');
+          assert.equal(res.body.posts[0].title, 'title');
           done();
         });
     });
@@ -90,8 +90,8 @@ describe('posts', () => {
         .query({ limit: 1 })
         .end((err, res) => {
           res.should.have.status(200);
-          assert.equal(res.body.length, 1);
-          assert.equal(res.body[0].title, 'title1');
+          assert.equal(res.body.posts.length, 1);
+          assert.equal(res.body.posts[0].title, 'title1');
           done();
         });
     });
@@ -101,8 +101,8 @@ describe('posts', () => {
         .get(`/posts/${firstPost.slug}`)
         .end((err, res) => {
           res.should.have.status(200);
-          assert.equal(res.body.title, 'title');
-          assert.equal(res.body.liked, false);
+          assert.equal(res.body.post.title, 'title');
+          assert.equal(res.body.post.liked, false);
           done();
         });
     });
@@ -113,8 +113,8 @@ describe('posts', () => {
         .set({ Authorization: 'Bearer ' + adminToken })
         .end((err, res) => {
           res.should.have.status(200);
-          assert.equal(res.body.title, 'title');
-          assert.equal(res.body.liked, true);
+          assert.equal(res.body.post.title, 'title');
+          assert.equal(res.body.post.liked, true);
           done();
         });
     });

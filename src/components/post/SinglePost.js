@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getPost } from '../../actions/actions';
 import PropTypes from 'prop-types';
-import PostBody from './PostBody';
+import ErrorDisplay from '../common/ErrorDisplay';
+import Loading from '../common/Loading';
+import PostCard from './PostCard';
 
 class SinglePost extends Component {
   componentWillMount() {
@@ -10,14 +12,21 @@ class SinglePost extends Component {
   }
 
   render() {
+    const title = this.props.post.title;
     return (
       <div>
         {
-          this.props.error
-          ?
-          <p style={{color: 'red'}}>{this.props.error}</p>
-          :
-          <PostBody body={this.props.post.body} />
+          !title && <Loading />
+        }
+        {
+          this.props.error &&
+          <ErrorDisplay
+            message={this.props.error}
+          />
+        }
+        {
+          title &&
+          <PostCard post={this.props.post} />
         }
       </div>
     );

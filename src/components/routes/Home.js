@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getAllPosts } from '../../actions/actions';
 import PostCard from '../post/PostCard';
-import CircularProgress from 'material-ui/CircularProgress';
+import ErrorDisplay from '../common/ErrorDisplay';
+import Loading from '../common/Loading';
 
 class Home extends Component {
   componentWillMount() {
@@ -16,10 +17,14 @@ class Home extends Component {
       <div>
         <NavigationMenu selectedIndex={1}/>
         {
-          this.props.all.length == 0 &&
-          <div style={{width: 60, margin: '200px auto'}}>
-            <CircularProgress size={60} thickness={7} />
-          </div>
+          this.props.all.length == 0 && !this.props.error &&
+          <Loading />
+        }
+        {
+          this.props.error &&
+          <ErrorDisplay
+            message={this.props.error}
+          />
         }
         {
           this.props.all.map(post => {

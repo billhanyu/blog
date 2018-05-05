@@ -3,6 +3,7 @@ import { Card, CardTitle, CardText } from 'material-ui/Card';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import PostBody from './PostBody';
+import TimeStamps from './TimeStamps';
 
 class PostCard extends Component {
   render() {
@@ -16,7 +17,13 @@ class PostCard extends Component {
     } = this.props.post;
 
     return (
-      <Card>
+      <Card
+        style={{
+          width: '80%',
+          margin: '40px auto',
+          padding: '50px',
+        }}
+      >
         <CardTitle
           onClick={() => {
             this.props.history.push(`/posts/${slug}`);
@@ -33,15 +40,7 @@ class PostCard extends Component {
           <PostBody body={body} />
         </CardText>
         <CardText>
-          <p>
-            Created At {new Date(createdAt).toLocaleString()}
-          </p>
-          {
-            updatedAt &&
-            <p>
-              Updated At {new Date(updatedAt).toLocaleString()}
-            </p>
-          }
+          <TimeStamps createdAt={createdAt} updatedAt={updatedAt} />
         </CardText>
       </Card>
     );

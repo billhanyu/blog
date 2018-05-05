@@ -51,14 +51,18 @@ router.get('/', auth.none, (req, res, next) => {
     .populate('author')
     .exec()
     .then(posts => {
-      res.json(posts.map(post => post.toJSONFor(req.user)));
+      res.json({
+        posts: posts.map(post => post.toJSONFor(req.user)),
+      });
     })
     .catch(next);
 });
 
 // get one post
 router.get('/:post', auth.none, (req, res, next) => {
-  res.json(req.post.toJSONFor(req.user));
+  res.json({
+    post: req.post.toJSONFor(req.user),
+  });
 });
 
 // post a blog post
