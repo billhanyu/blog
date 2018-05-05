@@ -8,7 +8,7 @@ Blog built with React+Express+MongoDB.
 Frontend:
 - React Router
 - React Redux
-- Bootstrap
+- Material UI
 
 Backend:
 - Express
