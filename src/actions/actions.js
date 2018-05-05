@@ -40,6 +40,7 @@ export function login(email, password) {
 export function getPost(slug) {
   return (dispatch, getState) => {
     axios.get(`/posts/${slug}`)
+      .query({limit: Number.MAX_SAFE_INTEGER})
       .then(response => {
         dispatch({ type: SINGLEPOST, payload: response.data });
       })

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import ReactMarkdown from 'react-markdown';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import PostBody from './PostBody';
 
 class PostCard extends Component {
   render() {
@@ -23,10 +23,14 @@ class PostCard extends Component {
           }}
           style={{cursor: 'pointer'}}
           title={title}
+          titleStyle={{
+            fontWeight: 600,
+            fontSize: 30,
+          }}
           subtitle={author.name || author.email}
         />
         <CardText>
-          <ReactMarkdown source={body} />
+          <PostBody body={body} />
         </CardText>
         <CardText>
           <p>

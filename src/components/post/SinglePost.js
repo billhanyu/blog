@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import ReactMarkdown from 'react-markdown';
 import { connect } from 'react-redux';
 import { getPost } from '../../actions/actions';
 import PropTypes from 'prop-types';
+import PostBody from './PostBody';
 
 class SinglePost extends Component {
   componentWillMount() {
@@ -17,7 +17,7 @@ class SinglePost extends Component {
           ?
           <p style={{color: 'red'}}>{this.props.error}</p>
           :
-          <ReactMarkdown source={this.props.post.body} />
+          <PostBody body={this.props.post.body} />
         }
       </div>
     );
