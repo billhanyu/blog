@@ -17,6 +17,7 @@
     "arrow-parens": 0,
     "linebreak-style": 0,
     "object-curly-spacing": 0,
-    "no-invalid-this": 1
+    "no-invalid-this": 1,
+    "camelcase": 0
   }
 }

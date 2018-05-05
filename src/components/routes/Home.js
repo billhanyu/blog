@@ -3,6 +3,7 @@ import NavigationMenu from '../NavigationMenu';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getAllPosts } from '../../actions/actions';
+import PostCard from '../post/PostCard';
 
 class Home extends Component {
   componentWillMount() {
@@ -13,16 +14,13 @@ class Home extends Component {
     return (
       <div>
         <NavigationMenu selectedIndex={1}/>
-        <h1>Blog Home</h1>
         {
           this.props.all.map(post => {
             return (
-              <a
+              <PostCard
                 key={post.slug}
-                href={`/posts/${post.slug}`}
-              >
-              {post.title}
-              </a>
+                post={post}
+              />
             );
           })
         }
