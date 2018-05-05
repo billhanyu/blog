@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 const center = {
   margin: '0 auto',
@@ -49,7 +50,7 @@ class LogInForm extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{marginTop: 40}}>
         <TextField
           hintText='lucy.zhang@duke.edu'
           errorText={this.state.emailErrorText}
@@ -76,18 +77,35 @@ class LogInForm extends Component {
           onChange={e => this.handleTextChange(e, 'password')}
           style={center}
         /><br />
-        <div style={center}>
+        <div
+          style={{
+            ...center,
+            height: 40,
+          }}>
           <p style={{color: 'red'}}>
             {this.props.error}
           </p>
         </div>
-        <br /><br />
         <RaisedButton
-          label="Log In"
+          label={this.props.signup ? 'Sign Up' : 'Log In'}
           primary={true}
           style={{ width: 200, margin: '0 auto', display: 'block' }}
           onClick={this.handleSubmit}
-        />
+        /><br /><br />
+        {
+          !this.props.signup &&
+          <div style={center}>
+            <span>Not a user?</span>
+            <RaisedButton
+              label='Sign Up'
+              secondary={true}
+              style={{ width: 100, marginLeft: 50, display: 'inline-block' }}
+              onClick={() => {
+                this.props.history.push('/signup');
+              }}
+            />
+          </div>
+        }
       </div>
     );
   }
@@ -97,6 +115,7 @@ LogInForm.propTypes = {
   onSubmit: PropTypes.func,
   signup: PropTypes.bool,
   error: PropTypes.string,
+  history: PropTypes.object,
 };
 
-export default LogInForm;
+export default withRouter(LogInForm);
