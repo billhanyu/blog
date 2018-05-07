@@ -78,11 +78,12 @@ describe('comments', () => {
         .get(`/posts/${firstPost.slug}/comments`)
         .end((err, res) => {
           res.should.have.status(200);
-          assert.equal(res.body.length, 2);
-          assert.equal(res.body[0].body, 'comment');
-          assert.equal(res.body[0].author.name, 'Lucy Zhang');
-          assert.equal(res.body[1].body, 'comment2');
-          assert.equal(res.body[1].author.name, 'Bill Yu');
+          const comments = res.body.comments;
+          assert.equal(comments.length, 2);
+          assert.equal(comments[0].body, 'comment');
+          assert.equal(comments[0].author.name, 'Lucy Zhang');
+          assert.equal(comments[1].body, 'comment2');
+          assert.equal(comments[1].author.name, 'Bill Yu');
           done();
         });
     });

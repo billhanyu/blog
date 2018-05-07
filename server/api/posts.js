@@ -128,7 +128,9 @@ router.get('/:post/comments', auth.none, (req, res, next) => {
       .exec();
   }))
     .then(results => {
-      return res.json(results.map(comment => comment.toJSON()));
+      return res.json({
+        comments: results.map(comment => comment.toJSON()),
+      });
     })
     .catch(next);
 });

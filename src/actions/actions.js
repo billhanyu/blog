@@ -6,6 +6,8 @@ import {
   REQUEST_ALL_POSTS,
   RECEIVE_ALL_POSTS,
   CLEAR_AUTH_ERROR,
+  RECEIVE_COMMENTS,
+  REQUEST_COMMENTS,
 } from './actionTypes';
 const NETWORK_ERROR = 'Network Error';
 
@@ -69,6 +71,19 @@ export function getAllPosts() {
       })
       .catch(err => {
         dispatch({ type: RECEIVE_ALL_POSTS, payload: { error: err.response.data.message || NETWORK_ERROR } });
+      });
+  };
+}
+
+export function getComments(slug) {
+  return (dispatch, getState) => {
+    dispatch({ type: REQUEST_COMMENTS });
+    axios.get(`/posts/${slug}/comments`)
+      .then(response => {
+        dispatch({ type: RECEIVE_COMMENTS, payload: response.data });
+      })
+      .catch(err => {
+        dispatch({ type: RECEIVE_COMMENTS, payload: { error: err.response.data.message || NETWORK_ERROR } });
       });
   };
 }

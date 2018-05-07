@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import ErrorDisplay from '../common/ErrorDisplay';
 import Loading from '../common/Loading';
 import PostCard from './PostCard';
+import Comments from './Comments';
 
 class SinglePost extends Component {
   componentWillMount() {
@@ -28,6 +29,7 @@ class SinglePost extends Component {
           title &&
           <PostCard post={this.props.post} />
         }
+        <Comments slug={this.props.slug} />
       </div>
     );
   }
