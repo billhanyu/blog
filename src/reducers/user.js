@@ -2,6 +2,7 @@ import {
   SIGNUP,
   LOGIN,
   LOGOUT,
+  CLEAR_AUTH_ERROR,
 } from '../actions/actionTypes';
 
 function user(state={}, action) {
@@ -17,6 +18,11 @@ function user(state={}, action) {
       return {
         ...state,
         token: '',
+      };
+    case CLEAR_AUTH_ERROR:
+      return {
+        ...state,
+        error: '',
       };
     default:
       return state;

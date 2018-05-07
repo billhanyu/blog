@@ -3,7 +3,9 @@ import {
   SIGNUP,
   LOGIN,
   SINGLEPOST,
-  ALLPOSTS,
+  REQUEST_ALL_POSTS,
+  RECEIVE_ALL_POSTS,
+  CLEAR_AUTH_ERROR,
 } from './actionTypes';
 const NETWORK_ERROR = 'Network Error';
 
@@ -38,6 +40,10 @@ export function login(email, password) {
   };
 }
 
+export function clearAuthError() {
+  return { type: CLEAR_AUTH_ERROR };
+}
+
 export function getPost(slug) {
   return (dispatch, getState) => {
     axios.get(`/posts/${slug}`)
@@ -52,16 +58,17 @@ export function getPost(slug) {
 
 export function getAllPosts() {
   return (dispatch, getState) => {
+    dispatch({ type: REQUEST_ALL_POSTS, payload: {} });
     axios.get('/posts', {
       params: {
         limit: Number.MAX_SAFE_INTEGER,
       },
     })
       .then(response => {
-        dispatch({ type: ALLPOSTS, payload: response.data });
+        dispatch({ type: RECEIVE_ALL_POSTS, payload: response.data });
       })
       .catch(err => {
-        dispatch({ type: ALLPOSTS, payload: { error: err.response.data.message || NETWORK_ERROR } });
+        dispatch({ type: RECEIVE_ALL_POSTS, payload: { error: err.response.data.message || NETWORK_ERROR } });
       });
   };
 }

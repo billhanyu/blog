@@ -1,6 +1,7 @@
 import {
   SINGLEPOST,
-  ALLPOSTS,
+  REQUEST_ALL_POSTS,
+  RECEIVE_ALL_POSTS,
 } from '../actions/actionTypes';
 
 function posts(state={
@@ -14,10 +15,17 @@ function posts(state={
         current: action.payload.post || {},
         error: action.payload.error,
       };
-    case ALLPOSTS:
+    case REQUEST_ALL_POSTS:
+      return {
+        ...state,
+        ready: false,
+        error: '',
+      };
+    case RECEIVE_ALL_POSTS:
       return {
         ...state,
         all: action.payload.posts || [],
+        ready: true,
         error: action.payload.error,
       };
     default:

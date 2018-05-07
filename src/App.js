@@ -8,8 +8,7 @@ import Profile from './components/routes/Profile';
 import Post from './components/routes/Post';
 import NoMatch from './components/routes/NoMatch';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import LogIn from './components/routes/LogIn';
-import SignUp from './components/routes/SignUp';
+import Auth from './components/routes/Auth';
 
 const store = configureStore();
 
@@ -39,12 +38,16 @@ class App extends Component {
                 <Route
                   name='login'
                   path='/login'
-                  component={LogIn}
+                  render={() => {
+                    return <Auth type='login' />;
+                  }}
                 />
                 <Route
                   name='signup'
                   path='/signup'
-                  component={SignUp}
+                  render={() => {
+                    return <Auth type='signup' />;
+                  }}
                 />
                 <Route
                   component={NoMatch}

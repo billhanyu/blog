@@ -4,19 +4,26 @@ import NavigationMenu from '../NavigationMenu';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { login } from '../../actions/actions';
+import { login, signup, clearAuthError } from '../../actions/actions';
 
-class LogIn extends Component {
+class Auth extends Component {
+  componentWillReceiveProps(newProps) {
+    if (this.props.type !== newProps.type) {
+      this.props.clearAuthError();
+    }
+  }
+
   render() {
     if (this.props.token) {
       this.props.history.replace('/');
     }
+    const signup = this.props.type === 'signup';
     return (
       <div>
         <NavigationMenu selectedIndex={2} />
         <LogInForm
-          signup={false}
-          onSubmit={this.props.login}
+          signup={signup}
+          onSubmit={signup ? this.props.signup : this.props.login}
           error={this.props.error}
         />
       </div>
@@ -34,14 +41,19 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     login: (email, password) => dispatch(login(email, password)),
+    signup: (email, name, password) => dispatch(signup(email, name, password)),
+    clearAuthError: () => dispatch(clearAuthError()),
   };
 };
 
-LogIn.propTypes = {
+Auth.propTypes = {
   token: PropTypes.string,
   history: PropTypes.object,
   login: PropTypes.func,
+  signup: PropTypes.func,
+  type: PropTypes.oneOf(['signup', 'login']),
   error: PropTypes.string,
+  clearAuthError: PropTypes.func,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LogIn));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Auth));

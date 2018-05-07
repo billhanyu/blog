@@ -17,7 +17,7 @@ class Home extends Component {
       <div>
         <NavigationMenu selectedIndex={1}/>
         {
-          this.props.all.length == 0 && !this.props.error &&
+          !this.props.ready && !this.props.error &&
           <Loading />
         }
         {
@@ -43,6 +43,7 @@ class Home extends Component {
 
 Home.propTypes = {
   all: PropTypes.array,
+  ready: PropTypes.bool,
   error: PropTypes.string,
   getAllPosts: PropTypes.func,
 };
@@ -50,6 +51,7 @@ Home.propTypes = {
 const mapStateToProps = state => {
   return {
     all: state.posts.all,
+    ready: state.posts.ready,
     error: state.posts.error,
   };
 };
