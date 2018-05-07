@@ -15,7 +15,11 @@ class Auth extends Component {
 
   render() {
     if (this.props.token) {
-      this.props.history.replace('/');
+      if (this.props.history.length < 3) {
+        this.props.history.replace('/');
+      } else {
+        this.props.history.goBack();
+      }
     }
     const signup = this.props.type === 'signup';
     return (

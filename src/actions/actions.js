@@ -8,6 +8,7 @@ import {
   CLEAR_AUTH_ERROR,
   RECEIVE_COMMENTS,
   REQUEST_COMMENTS,
+  POST_COMMENT,
 } from './actionTypes';
 const NETWORK_ERROR = 'Network Error';
 
@@ -84,6 +85,23 @@ export function getComments(slug) {
       })
       .catch(err => {
         dispatch({ type: RECEIVE_COMMENTS, payload: { error: err.response.data.message || NETWORK_ERROR } });
+      });
+  };
+}
+
+export function postComment(slug, body) {
+  return (dispatch, getState) => {
+    dispatch({ type: REQUEST_COMMENTS });
+    axios.post(`/posts/${slug}/comments`, {
+      body,
+    }, {
+      headers: { Authorization: 'Bearer ' + getState().user.token },
+    })
+      .then(response => {
+        dispatch(getComments(slug));
+      })
+      .catch(err => {
+        dispatch({ type: POST_COMMENT, payload: { error: err.response.data.message || NETWORK_ERROR } });
       });
   };
 }

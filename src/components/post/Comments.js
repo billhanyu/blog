@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import CommentItem from './CommentItem';
 import { getComments } from '../../actions/actions';
+import EditComment from './EditComment';
 
 class Comments extends Component {
   componentWillMount() {
@@ -40,6 +41,9 @@ class Comments extends Component {
               })
             }
           </List>
+        </CardText>
+        <CardText>
+          <EditComment slug={this.props.slug} />
         </CardText>
       </Card>
     );
