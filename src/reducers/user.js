@@ -5,12 +5,16 @@ import {
   CLEAR_AUTH_ERROR,
 } from '../actions/actionTypes';
 
-function user(state={}, action) {
+function user(state={
+  admin: false,
+  token: '',
+}, action) {
   switch (action.type) {
     case SIGNUP:
     case LOGIN:
       return {
         ...state,
+        admin: action.payload.admin,
         token: action.payload.token,
         error: action.payload.error,
       };

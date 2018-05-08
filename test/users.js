@@ -99,6 +99,7 @@ describe('user', () => {
             .end((err, res) => {
               res.should.have.status(200);
               res.body.should.have.property('token');
+              res.body.should.have.property('admin');
               done();
             });
         })

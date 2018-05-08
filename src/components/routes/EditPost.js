@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { submitPost } from '../../actions/actions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import Unauthorized from '../common/Unauthorized';
 
 class EditPost extends Component {
   constructor(props) {
@@ -63,56 +64,60 @@ class EditPost extends Component {
     if (this.submitted && this.props.success) {
       this.props.history.replace(`/posts/${this.props.slug}`);
     }
-    return (
-      <div>
-        <NavigationMenu selectedIndex={1} />
-        <Card
-          style={centeredCard}
-        >
-          <CardTitle
-            title='New Post'
-            titleStyle={{
-              fontWeight: 600,
-              fontSize: 30,
-            }}
-          />
-          <CardText>
-            <TextField
-              style={{
-                fontWeight: 400,
-                fontSize: 25,
+    if (this.props.admin) {
+      return (
+        <div>
+          <NavigationMenu selectedIndex={1} />
+          <Card
+            style={centeredCard}
+          >
+            <CardTitle
+              title='New Post'
+              titleStyle={{
+                fontWeight: 600,
+                fontSize: 30,
               }}
-              fullWidth={true}
-              value={this.state.title}
-              onChange={this.onChangeTitle}
-              hintText='Post Title'
-              errorText={this.state.titleErrorText}
             />
-            <TextField
-              fullWidth={true}
-              multiLine={true}
-              rows={15}
-              value={this.state.body}
-              onChange={this.onChangeBody}
-              hintText='Post Body. Markdown is supported'
-              errorText={this.state.bodyErrorText}
-            />
-            <RaisedButton
-              primary={true}
-              onClick={this.onSubmit}
-            >
-              Post
-            </RaisedButton>
-          </CardText>
-        </Card>
-      </div>
-    );
+            <CardText>
+              <TextField
+                style={{
+                  fontWeight: 400,
+                  fontSize: 25,
+                }}
+                fullWidth={true}
+                value={this.state.title}
+                onChange={this.onChangeTitle}
+                hintText='Post Title'
+                errorText={this.state.titleErrorText}
+              />
+              <TextField
+                fullWidth={true}
+                multiLine={true}
+                rows={15}
+                value={this.state.body}
+                onChange={this.onChangeBody}
+                hintText='Post Body. Markdown is supported'
+                errorText={this.state.bodyErrorText}
+              />
+              <RaisedButton
+                primary={true}
+                onClick={this.onSubmit}
+              >
+                Post
+              </RaisedButton>
+            </CardText>
+          </Card>
+        </div>
+      );
+    } else {
+      return <Unauthorized />;
+    }
   }
 }
 
 const mapStateToProps = state => {
   return {
-    token: state.user.token,
+    ...state.user,
     success: state.posts.new.success,
     slug: state.posts.new.slug,
   };
@@ -129,6 +134,7 @@ EditPost.propTypes = {
   success: PropTypes.bool,
   slug: PropTypes.string,
   history: PropTypes.object,
+  admin: PropTypes.bool,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EditPost));
