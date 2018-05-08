@@ -17,11 +17,12 @@ class Admin extends Component {
             style={centeredCard}
           >
             <RaisedButton
+              label='New Post'
               primary={true}
               onClick={() => {
                 this.props.history.push('/newpost');
               }}
-            >New Post</RaisedButton>
+            />
           </Paper>
         </div>
       );

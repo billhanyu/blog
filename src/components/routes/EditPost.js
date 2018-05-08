@@ -100,11 +100,10 @@ class EditPost extends Component {
                 errorText={this.state.bodyErrorText}
               />
               <RaisedButton
+                label='Post'
                 primary={true}
                 onClick={this.onSubmit}
-              >
-                Post
-              </RaisedButton>
+              />
             </CardText>
           </Card>
         </div>

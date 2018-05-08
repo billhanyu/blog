@@ -12,11 +12,16 @@ import {
   SUBMIT_POST_RESPONSE,
   SUBMIT_POST_REQUEST,
 } from './actionTypes';
+import { baseURL } from '../config';
 const NETWORK_ERROR = 'Network Error';
+
+const instance = axios.create({
+  baseURL,
+});
 
 export function signup(email, name, password) {
   return (dispatch, getState) => {
-    axios.post('/user/signup', {
+    instance.post(`/user/signup`, {
       email,
       name,
       password,
@@ -32,7 +37,7 @@ export function signup(email, name, password) {
 
 export function login(email, password) {
   return (dispatch, getState) => {
-    axios.post('/user/login', {
+    instance.post(`/user/login`, {
       email,
       password,
     })
@@ -51,7 +56,7 @@ export function clearAuthError() {
 
 export function getPost(slug) {
   return (dispatch, getState) => {
-    axios.get(`/posts/${slug}`)
+    instance.get(`/posts/${slug}`)
       .then(response => {
         dispatch({ type: SINGLEPOST, payload: response.data });
       })
@@ -64,7 +69,7 @@ export function getPost(slug) {
 export function getAllPosts() {
   return (dispatch, getState) => {
     dispatch({ type: REQUEST_ALL_POSTS, payload: {} });
-    axios.get('/posts', {
+    instance.get(`/posts`, {
       params: {
         limit: Number.MAX_SAFE_INTEGER,
       },
@@ -81,7 +86,7 @@ export function getAllPosts() {
 export function getComments(slug) {
   return (dispatch, getState) => {
     dispatch({ type: REQUEST_COMMENTS });
-    axios.get(`/posts/${slug}/comments`)
+    instance.get(`/posts/${slug}/comments`)
       .then(response => {
         dispatch({ type: RECEIVE_COMMENTS, payload: response.data });
       })
@@ -94,7 +99,7 @@ export function getComments(slug) {
 export function postComment(slug, body) {
   return (dispatch, getState) => {
     dispatch({ type: REQUEST_COMMENTS });
-    axios.post(`/posts/${slug}/comments`, {
+    instance.post(`/posts/${slug}/comments`, {
       body,
     }, {
       headers: { Authorization: 'Bearer ' + getState().user.token },
@@ -111,7 +116,7 @@ export function postComment(slug, body) {
 export function submitPost(title, body) {
   return (dispatch, getState) => {
     dispatch({ type: SUBMIT_POST_REQUEST });
-    axios.post(`/posts`, {
+    instance.post(`/posts`, {
       title,
       body,
     }, {

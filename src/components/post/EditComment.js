@@ -69,10 +69,11 @@ class EditComment extends Component {
               rowsMax={4}
             /><br />
             <RaisedButton
+              label='Comment'
               style={{ float: 'right' }}
               primary={true}
               onClick={this.onSubmit}
-            >Comment</RaisedButton>
+            />
           </div>
         }
       </div>
