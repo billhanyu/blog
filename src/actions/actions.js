@@ -9,6 +9,8 @@ import {
   RECEIVE_COMMENTS,
   REQUEST_COMMENTS,
   POST_COMMENT,
+  SUBMIT_POST_RESPONSE,
+  SUBMIT_POST_REQUEST,
 } from './actionTypes';
 const NETWORK_ERROR = 'Network Error';
 
@@ -102,6 +104,25 @@ export function postComment(slug, body) {
       })
       .catch(err => {
         dispatch({ type: POST_COMMENT, payload: { error: err.response.data.message || NETWORK_ERROR } });
+      });
+  };
+}
+
+export function submitPost(title, body) {
+  return (dispatch, getState) => {
+    dispatch({ type: SUBMIT_POST_REQUEST });
+    axios.post(`/posts`, {
+      title,
+      body,
+    }, {
+        headers: { Authorization: 'Bearer ' + getState().user.token },
+      })
+      .then(response => {
+        dispatch({ type: SUBMIT_POST_RESPONSE, payload: { slug: response.data.slug }});
+        dispatch(getPost(response.data.slug));
+      })
+      .catch(err => {
+        dispatch({ type: SUBMIT_POST_RESPONSE, payload: { error: err.response.data.message || NETWORK_ERROR } });
       });
   };
 }

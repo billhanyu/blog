@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import CommentItem from './CommentItem';
 import { getComments } from '../../actions/actions';
 import EditComment from './EditComment';
+import { centeredCard } from '../common/styles';
 
 class Comments extends Component {
   componentWillMount() {
@@ -15,11 +16,7 @@ class Comments extends Component {
   render() {
     return (
       <Card
-        style={{
-          width: '80%',
-          margin: '40px auto',
-          padding: '50px',
-        }}
+        style={centeredCard}
       >
         <CardTitle
           title='Comments'

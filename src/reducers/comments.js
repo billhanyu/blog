@@ -18,7 +18,7 @@ function comments(state={
     case RECEIVE_COMMENTS:
       return {
         ...state,
-        all: action.payload.comments,
+        all: action.payload.comments || [],
         error: action.payload.error,
       };
     case POST_COMMENT:

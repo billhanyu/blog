@@ -4,11 +4,12 @@ import { Provider } from 'react-redux';
 import configureStore from './configureStore';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './components/routes/Home';
-import Profile from './components/routes/Profile';
+import Admin from './components/routes/Admin';
 import Post from './components/routes/Post';
 import NoMatch from './components/routes/NoMatch';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Auth from './components/routes/Auth';
+import EditPost from './components/routes/EditPost';
 
 const store = configureStore();
 
@@ -26,9 +27,9 @@ class App extends Component {
                   component={Home}
                 />
                 <Route
-                  name='profile'
-                  path='/profile'
-                  component={Profile}
+                  name='admin'
+                  path='/admin'
+                  component={Admin}
                 />
                 <Route
                   name='post'
@@ -48,6 +49,11 @@ class App extends Component {
                   render={() => {
                     return <Auth type='signup' />;
                   }}
+                />
+                <Route
+                  name='newpost'
+                  path='/newpost'
+                  component={EditPost}
                 />
                 <Route
                   component={NoMatch}

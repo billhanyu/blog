@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import PostBody from './PostBody';
 import TimeStamps from './TimeStamps';
+import { centeredCard } from '../common/styles';
 
 class PostCard extends Component {
   render() {
@@ -18,11 +19,7 @@ class PostCard extends Component {
 
     return (
       <Card
-        style={{
-          width: '80%',
-          margin: '40px auto',
-          padding: '50px',
-        }}
+        style={centeredCard}
       >
         <CardTitle
           onClick={() => {

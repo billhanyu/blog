@@ -24,7 +24,7 @@ class Auth extends Component {
     const signup = this.props.type === 'signup';
     return (
       <div>
-        <NavigationMenu selectedIndex={2} />
+        <NavigationMenu selectedIndex={1} />
         <LogInForm
           signup={signup}
           onSubmit={signup ? this.props.signup : this.props.login}

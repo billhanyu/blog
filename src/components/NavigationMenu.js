@@ -65,15 +65,6 @@ class NavigationMenu extends Component {
             />
             <ListItem
               value={2}
-              primaryText='Profile'
-              leftIcon={<Account />}
-              onClick={() => {
-                this.props.history.push('/profile');
-                this.handleClose();
-              }}
-            />
-            <ListItem
-              value={3}
               primaryText='GitHub'
               leftIcon={
                 <SvgIcon>
@@ -85,6 +76,15 @@ class NavigationMenu extends Component {
                 this.setState({
                   selectedIndex: this.lastIndex,
                 });
+              }}
+            />
+            <ListItem
+              value={3}
+              primaryText='Admin'
+              leftIcon={<Account />}
+              onClick={() => {
+                this.props.history.push('/admin');
+                this.handleClose();
               }}
             />
           </SelectableList>

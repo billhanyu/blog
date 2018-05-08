@@ -52,7 +52,7 @@ class LogInForm extends Component {
     return (
       <div style={{marginTop: 40}}>
         <TextField
-          hintText='lucy.zhang@duke.edu'
+          hintText='lucy.zhang3@duke.edu'
           errorText={this.state.emailErrorText}
           floatingLabelText='E-Mail'
           onChange={e => this.handleTextChange(e, 'email')}

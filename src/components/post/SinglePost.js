@@ -17,7 +17,7 @@ class SinglePost extends Component {
     return (
       <div>
         {
-          !title && <Loading />
+          !title && !this.props.error && <Loading />
         }
         {
           this.props.error &&
@@ -29,7 +29,10 @@ class SinglePost extends Component {
           title &&
           <PostCard post={this.props.post} />
         }
-        <Comments slug={this.props.slug} />
+        {
+          !this.props.error &&
+          <Comments slug={this.props.slug} />
+        }
       </div>
     );
   }

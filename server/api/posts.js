@@ -78,7 +78,7 @@ router.post('/', auth.admin, (req, res, next) => {
     author: req.user,
   });
   post.save()
-    .then(() => res.sendStatus(200))
+    .then((saved) => res.json(saved.toJSONFor(req.user)))
     .catch(next);
 });
 
