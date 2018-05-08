@@ -78,15 +78,18 @@ class NavigationMenu extends Component {
                 });
               }}
             />
-            <ListItem
-              value={3}
-              primaryText='Admin'
-              leftIcon={<Account />}
-              onClick={() => {
-                this.props.history.push('/admin');
-                this.handleClose();
-              }}
-            />
+            {
+              this.props.admin &&
+              <ListItem
+                value={3}
+                primaryText='Admin'
+                leftIcon={<Account />}
+                onClick={() => {
+                  this.props.history.push('/admin');
+                  this.handleClose();
+                }}
+              />
+            }
           </SelectableList>
         </Drawer>
         <AppBar
@@ -103,11 +106,12 @@ NavigationMenu.propTypes = {
   history: PropTypes.object,
   selectedIndex: PropTypes.number.isRequired,
   token: PropTypes.string,
+  admin: PropTypes.bool,
 };
 
 const mapStateToProps = state => {
   return {
-    token: state.user.token,
+    ...state.user,
   };
 };
 
