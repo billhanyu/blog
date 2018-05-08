@@ -30,7 +30,20 @@ Frontend hot reloading is enabled!
 1. `npm run build-server` to build backend to `/build`
 2. `npm run build` to build frontend to `/dist`
 3. Use whatever process management tool to start `build/server.js`
-4. Use whatever serving tool to serve `/dist`
+4. Use nginx to serve `/dist`
+5. nginx config (only the important part):
+
+```
+http {
+  server {
+    listen 80;
+    root /home/vcm/blog/dist;
+    location / {
+      try_files $uri /index.html;
+    }
+  }
+}
+```
 
 ## Articles Referenced
 
