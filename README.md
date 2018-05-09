@@ -30,8 +30,9 @@ Frontend hot reloading is enabled!
 1. `npm run build-server` to build backend to `/build`
 2. `npm run build` to build frontend to `/dist`
 3. Use whatever process management tool to start `build/server.js`
-4. Use nginx to serve `/dist`
-5. nginx config (only the important part):
+4. Fill in the production server url with port number `:1717` in `/src/config.js`
+5. Use nginx to serve `/dist`
+6. nginx config (only the important part):
 
 ```
 http {
