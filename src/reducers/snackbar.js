@@ -14,11 +14,11 @@ function snackbar(state={
     case RECEIVE_SUBMIT_POST:
     case POST_COMMENT:
       return {
-        message: action.payload.error,
+        message: action.payload.error || '',
       };
     case DISPLAY_MESSAGE:
       return {
-        message: action.payload.message,
+        message: action.payload.message || '',
       };
     case CLOSE_SNACKBAR:
       return {
