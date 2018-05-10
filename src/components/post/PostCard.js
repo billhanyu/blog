@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardTitle, CardText, CardActions } from 'material-ui/Card';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import PostBody from './PostBody';
 import TimeStamps from './TimeStamps';
 import { centeredCard } from '../common/styles';
+import { connect } from 'react-redux';
+import EditPostButton from './buttons/EditPostButton';
+import DeletePostButton from './buttons/DeletePostButton';
 
 class PostCard extends Component {
   render() {
@@ -33,6 +36,13 @@ class PostCard extends Component {
           }}
           subtitle={author.name || author.email}
         />
+        {
+          this.props.admin &&
+          <CardActions>
+            <EditPostButton slug={slug} />
+            <DeletePostButton slug={slug} />
+          </CardActions>
+        }
         <CardText>
           <PostBody body={body} />
         </CardText>
@@ -44,9 +54,16 @@ class PostCard extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    admin: state.user.admin,
+  };
+};
+
 PostCard.propTypes = {
   post: PropTypes.object,
   history: PropTypes.object,
+  admin: PropTypes.bool,
 };
 
-export default withRouter(PostCard);
+export default connect(mapStateToProps)(withRouter(PostCard));

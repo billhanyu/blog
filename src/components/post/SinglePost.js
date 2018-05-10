@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import ErrorDisplay from '../common/ErrorDisplay';
 import Loading from '../common/Loading';
 import PostCard from './PostCard';
-import Comments from './Comments';
+import Comments from './comments/Comments';
 
 class SinglePost extends Component {
   componentWillMount() {

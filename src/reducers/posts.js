@@ -2,16 +2,21 @@ import {
   SINGLEPOST,
   REQUEST_ALL_POSTS,
   RECEIVE_ALL_POSTS,
-  SUBMIT_POST_RESPONSE,
-  SUBMIT_POST_REQUEST,
+  RECEIVE_SUBMIT_POST,
+  REQUEST_SUBMIT_POST,
+  REQUEST_DELETE_POST,
+  RECEIVE_DELETE_POST,
 } from '../actions/actionTypes';
 
 function posts(state={
   current: {},
   all: [],
   new: {
+    slug: '',
     success: false,
-    error: '',
+  },
+  delete: {
+    success: false,
   },
 }, action) {
   switch (action.type) {
@@ -34,21 +39,33 @@ function posts(state={
         ready: true,
         error: action.payload.error,
       };
-    case SUBMIT_POST_REQUEST:
+    case REQUEST_SUBMIT_POST:
       return {
         ...state,
         new: {
           success: false,
-          error: '',
         },
       };
-    case SUBMIT_POST_RESPONSE:
+    case RECEIVE_SUBMIT_POST:
       return {
         ...state,
         new: {
           slug: action.payload.slug,
           success: !action.payload.error,
-          error: action.payload.error,
+        },
+      };
+    case REQUEST_DELETE_POST:
+      return {
+        ...state,
+        delete: {
+          success: false,
+        },
+      };
+    case RECEIVE_DELETE_POST:
+      return {
+        ...state,
+        delete: {
+          success: !action.payload.error,
         },
       };
     default:

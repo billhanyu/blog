@@ -9,8 +9,12 @@ import {
   RECEIVE_COMMENTS,
   REQUEST_COMMENTS,
   POST_COMMENT,
-  SUBMIT_POST_RESPONSE,
-  SUBMIT_POST_REQUEST,
+  RECEIVE_SUBMIT_POST,
+  REQUEST_SUBMIT_POST,
+  RECEIVE_DELETE_POST,
+  CLOSE_SNACKBAR,
+  REQUEST_DELETE_POST,
+  DISPLAY_MESSAGE,
 } from './actionTypes';
 import { baseURL } from '../config';
 const NETWORK_ERROR = 'Network Error';
@@ -121,7 +125,7 @@ export function postComment(slug, body) {
 
 export function submitPost(title, body) {
   return (dispatch, getState) => {
-    dispatch({ type: SUBMIT_POST_REQUEST });
+    dispatch({ type: REQUEST_SUBMIT_POST });
     instance.post(`/posts`, {
       title,
       body,
@@ -129,11 +133,35 @@ export function submitPost(title, body) {
         headers: { Authorization: 'Bearer ' + getState().user.token },
       })
       .then(response => {
-        dispatch({ type: SUBMIT_POST_RESPONSE, payload: { slug: response.data.slug }});
+        dispatch({ type: RECEIVE_SUBMIT_POST, payload: { slug: response.data.slug }});
         dispatch(getPost(response.data.slug));
       })
       .catch(err => {
-        dispatch({ type: SUBMIT_POST_RESPONSE, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
+        dispatch({ type: RECEIVE_SUBMIT_POST, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
       });
   };
+}
+
+export function deletePost(slug) {
+  return (dispatch, getState) => {
+    dispatch({ type: REQUEST_DELETE_POST });
+    instance.delete(`/posts/${slug}`, {
+      headers: { Authorization: 'Bearer ' + getState().user.token },
+    })
+      .then(response => {
+        dispatch(displayMessage('Post Deleted'));
+        dispatch({ type: RECEIVE_DELETE_POST, payload: {} });
+      })
+      .catch(err => {
+        dispatch({ type: RECEIVE_DELETE_POST, payload: { error: getMessageFromErr(err) || NETWORK_ERROR }});
+      });
+  };
+}
+
+export function closeSnackBar() {
+  return { type: CLOSE_SNACKBAR };
+}
+
+export function displayMessage(message) {
+  return { type: DISPLAY_MESSAGE, payload: { message }};
 }

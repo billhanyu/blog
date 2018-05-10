@@ -4,9 +4,9 @@ import { List } from 'material-ui/List';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import CommentItem from './CommentItem';
-import { getComments } from '../../actions/actions';
+import { getComments } from '../../../actions/actions';
 import EditComment from './EditComment';
-import { centeredCard } from '../common/styles';
+import { centeredCard } from '../../common/styles';
 
 class Comments extends Component {
   componentWillMount() {
