@@ -7,6 +7,9 @@ class LogInButton extends Component {
   render() {
     return (
       <FlatButton
+        labelStyle={{
+          color: 'white',
+        }}
         label="Login"
         onClick={() => {
           this.props.history.push('/login');

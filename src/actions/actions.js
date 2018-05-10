@@ -19,6 +19,12 @@ const instance = axios.create({
   baseURL,
 });
 
+const getMessageFromErr = err => {
+  return err.response && err.response.data
+    ? err.response.data.message
+    : null;
+};
+
 export function signup(email, name, password) {
   return (dispatch, getState) => {
     instance.post(`/user/signup`, {
@@ -30,7 +36,7 @@ export function signup(email, name, password) {
         dispatch({ type: SIGNUP, payload: response.data });
       })
       .catch(err => {
-        dispatch({ type: SIGNUP, payload: { error: err.response.data.message || NETWORK_ERROR } });
+        dispatch({ type: SIGNUP, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
       });
   };
 }
@@ -45,7 +51,7 @@ export function login(email, password) {
         dispatch({ type: LOGIN, payload: response.data });
       })
       .catch(err => {
-        dispatch({ type: LOGIN, payload: { error: err.response.data.message || NETWORK_ERROR } });
+        dispatch({ type: LOGIN, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
       });
   };
 }
@@ -61,7 +67,7 @@ export function getPost(slug) {
         dispatch({ type: SINGLEPOST, payload: response.data });
       })
       .catch(err => {
-        dispatch({ type: SINGLEPOST, payload: { error: err.response.data.message || NETWORK_ERROR }});
+        dispatch({ type: SINGLEPOST, payload: { error: getMessageFromErr(err) || NETWORK_ERROR }});
       });
   };
 }
@@ -78,7 +84,7 @@ export function getAllPosts() {
         dispatch({ type: RECEIVE_ALL_POSTS, payload: response.data });
       })
       .catch(err => {
-        dispatch({ type: RECEIVE_ALL_POSTS, payload: { error: err.response.data.message || NETWORK_ERROR } });
+        dispatch({ type: RECEIVE_ALL_POSTS, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
       });
   };
 }
@@ -91,7 +97,7 @@ export function getComments(slug) {
         dispatch({ type: RECEIVE_COMMENTS, payload: response.data });
       })
       .catch(err => {
-        dispatch({ type: RECEIVE_COMMENTS, payload: { error: err.response.data.message || NETWORK_ERROR } });
+        dispatch({ type: RECEIVE_COMMENTS, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
       });
   };
 }
@@ -108,7 +114,7 @@ export function postComment(slug, body) {
         dispatch(getComments(slug));
       })
       .catch(err => {
-        dispatch({ type: POST_COMMENT, payload: { error: err.response.data.message || NETWORK_ERROR } });
+        dispatch({ type: POST_COMMENT, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
       });
   };
 }
@@ -127,7 +133,7 @@ export function submitPost(title, body) {
         dispatch(getPost(response.data.slug));
       })
       .catch(err => {
-        dispatch({ type: SUBMIT_POST_RESPONSE, payload: { error: err.response.data.message || NETWORK_ERROR } });
+        dispatch({ type: SUBMIT_POST_RESPONSE, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
       });
   };
 }
