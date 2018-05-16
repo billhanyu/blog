@@ -1,0 +1,17 @@
+version: '3'
+services:
+  blog-api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_URL: mongodb://mongodb:27017/blog
+    restart: always
+    ports:
+      - "1717:1717"
+    command: bash /app/wait-for-it.sh mongodb:27017 -- node build/server.js
+  mongodb:
+    image: mongo:latest
+    restart: always
