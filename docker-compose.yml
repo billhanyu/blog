@@ -11,7 +11,7 @@ services:
     restart: always
     ports:
       - "1717:1717"
-    command: bash /app/wait-for-it.sh mongodb:27017 -- mongoimport --db blog --collection users --file seed.json && node build/server.js
+    command: bash /app/mongo-seed/wait-for-it.sh mongodb:27017 -- mongoimport --db blog --collection users --file seed.json && node build/server.js
   mongodb:
     image: mongo:latest
     restart: always
