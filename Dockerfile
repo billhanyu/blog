@@ -6,6 +6,8 @@ RUN echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen
 
 RUN apt-get update
 
+RUN apt-get install -y mongodb
+
 WORKDIR /app
 
 COPY package*.json ./
@@ -18,6 +20,6 @@ RUN npm run build-server
 
 EXPOSE 1717
 
-RUN apt-get install -y mongodb
+RUN ["chmod", "+x", "/app/wait-for-it.sh"]
 
 CMD ["node", "build/server.js"]
