@@ -4,22 +4,17 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    restart: always
     depends_on:
       - mongodb
     environment:
       MONGO_URL: mongodb://mongodb:27017/blog
-    restart: always
     ports:
       - "1717:1717"
-    command: bash /app/mongo-seed/wait-for-it.sh mongodb:27017 -- mongoimport --db blog --collection users --file seed.json && node build/server.js
+    command: bash -c "mongoimport --host mongodb --db blog --collection users --file seed.json && node build/server.js"
   mongodb:
     image: mongo:latest
     restart: always
-  mongo-seed:
-    build: ./mongo-seed
-    depends_on:
-      - mongodb
-    command: bash /wait-for-it.sh mongodb:27017 -- mongoimport --host mongodb --db blog --collection users --type json --file /seed.json --jsonArray
   web:
     image: nginx:latest
     restart: always
