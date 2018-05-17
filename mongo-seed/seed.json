@@ -1,0 +1,26 @@
+[
+  {
+    "_id": {
+      "$oid": "5afc8ee1e98e90c7298e39cd"
+    },
+    "likes": [],
+    "admin": true,
+    "name": "Lucy Zhang",
+    "email": "lucy.zhang3@duke.edu",
+    "salt": "887df36584512e2a3b316494af27819b",
+    "hash": "ee033e5104771c3b1a3b9171fbbbea3d0d0fc88137e8c2830c22ef712db5916e4747c8416520a98d9f5f26c8c3c2e67a7cab346ae5c35c957de4e1164425d797",
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "5afd9338f71d4228cc11eb2e"
+    },
+    "likes": [],
+    "admin": false,
+    "name": "Lucy Zhang",
+    "email": "lucy.zhang@duke.edu",
+    "salt": "e3f624cc9d6c48e8ceb0bddac41e1307",
+    "hash": "adbb55c163bb0dd401265376dbd86e64e905abf6cbb145e67d85fa9a73e4bb64d6133670f66d1564332fb5490f34ae038151f71cf53dd4762765ea0a26e5c41f",
+    "__v": 0
+  }
+]

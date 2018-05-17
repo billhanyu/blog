@@ -15,6 +15,11 @@ services:
   mongodb:
     image: mongo:latest
     restart: always
+  mongo-seed:
+    build: ./mongo-seed
+    depends_on:
+      - mongodb
+    command: bash /wait-for-it.sh mongodb:27017 -- mongoimport --host mongodb --db blog --collection users --type json --file /seed.json --jsonArray
   web:
     image: nginx:latest
     restart: always
