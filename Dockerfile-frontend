@@ -1,0 +1,23 @@
+FROM nginx
+
+RUN apt-get update
+
+RUN apt-get install -y curl wget gnupg
+
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash
+
+RUN apt-get install -y nodejs
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+RUN cp -a /app/dist/* /usr/share/nginx/html
+
+RUN cp /app/nginx.conf /etc/nginx/

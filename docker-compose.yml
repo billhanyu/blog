@@ -16,10 +16,9 @@ services:
     image: mongo:latest
     restart: always
   web:
-    image: nginx:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile-frontend
     restart: always
     ports:
       - "80:80"
-    volumes:
-      - ./dist:/usr/share/nginx/html:ro
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
