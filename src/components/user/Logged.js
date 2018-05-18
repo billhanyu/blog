@@ -1,26 +1,49 @@
-import React from 'react';
+import React, { Component } from 'react';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import { connect } from 'react-redux';
+import { logout } from '../../actions/actions';
+import PropTypes from 'prop-types';
 
-const Logged = props => (
-  <IconMenu
-    {...props}
-    iconButtonElement={
-      <IconButton><MoreVertIcon /></IconButton>
-    }
-    targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-    anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-  >
-    <MenuItem primaryText="Profile" />
-    <MenuItem
-      primaryText="Sign out"
-      onClick={() => location.reload()}
-    />
-  </IconMenu>
-);
+class Logged extends Component {
+  render() {
+    return (
+      <IconMenu
+        iconButtonElement={
+          <IconButton><MoreVertIcon color='white' /></IconButton>
+        }
+        targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+      >
+        <MenuItem primaryText="Profile" />
+        <MenuItem
+          primaryText="Sign out"
+          onClick={() => {
+            this.props.logout();
+            location.reload();
+          }}
+        />
+      </IconMenu>
+    );
+  }
+}
 
 Logged.muiName = 'IconMenu';
 
-export default Logged;
+const mapStateToProps = state => {
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    logout: () => dispatch(logout()),
+  };
+};
+
+Logged.propTypes = {
+  logout: PropTypes.func,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Logged);

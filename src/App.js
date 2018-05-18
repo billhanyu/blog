@@ -11,6 +11,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Auth from './components/routes/Auth';
 import EditPost from './components/routes/EditPost';
 import AppSnackBar from './components/common/AppSnackBar';
+import CookieHandler from './CookieHandler';
 
 const store = configureStore();
 
@@ -21,6 +22,7 @@ class App extends Component {
         <Router>
           <MuiThemeProvider>
             <div>
+              <CookieHandler />
               <AppSnackBar />
               <Switch>
                 <Route

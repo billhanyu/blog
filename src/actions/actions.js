@@ -15,6 +15,8 @@ import {
   CLOSE_SNACKBAR,
   REQUEST_DELETE_POST,
   DISPLAY_MESSAGE,
+  TOKEN_FROM_COOKIE,
+  LOGOUT,
 } from './actionTypes';
 import { baseURL } from '../config';
 const NETWORK_ERROR = 'Network Error';
@@ -57,6 +59,20 @@ export function login(email, password) {
       .catch(err => {
         dispatch({ type: LOGIN, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
       });
+  };
+}
+
+export function logout() {
+  return { type: LOGOUT };
+}
+
+export function tokenFromCookie(admin, token) {
+  return {
+    type: TOKEN_FROM_COOKIE,
+    payload: {
+      admin,
+      token,
+    },
   };
 }
 

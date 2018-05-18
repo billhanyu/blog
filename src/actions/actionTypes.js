@@ -1,6 +1,7 @@
 // user
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const TOKEN_FROM_COOKIE = 'TOKEN_FROM_COOKIE';
 export const SIGNUP = 'SIGNUP';
 export const CLEAR_AUTH_ERROR = 'CLEAR_AUTH_ERROR';
 
