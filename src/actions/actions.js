@@ -11,6 +11,8 @@ import {
   POST_COMMENT,
   RECEIVE_SUBMIT_POST,
   REQUEST_SUBMIT_POST,
+  REQUEST_EDIT_POST,
+  RECEIVE_EDIT_POST,
   RECEIVE_DELETE_POST,
   CLOSE_SNACKBAR,
   REQUEST_DELETE_POST,
@@ -154,6 +156,25 @@ export function submitPost(title, body) {
       })
       .catch(err => {
         dispatch({ type: RECEIVE_SUBMIT_POST, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
+      });
+  };
+}
+
+export function editPost(slug, title, body) {
+  return (dispatch, getState) => {
+    dispatch({ type: REQUEST_EDIT_POST });
+    instance.put(`/posts/${slug}`, {
+      title,
+      body,
+    }, {
+        headers: { Authorization: 'Bearer ' + getState().user.token },
+      })
+      .then(response => {
+        dispatch({ type: RECEIVE_EDIT_POST, payload: { slug: response.data.slug } });
+        dispatch(getPost(response.data.slug));
+      })
+      .catch(err => {
+        dispatch({ type: RECEIVE_EDIT_POST, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
       });
   };
 }

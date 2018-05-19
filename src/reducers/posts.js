@@ -6,6 +6,8 @@ import {
   REQUEST_SUBMIT_POST,
   REQUEST_DELETE_POST,
   RECEIVE_DELETE_POST,
+  REQUEST_EDIT_POST,
+  RECEIVE_EDIT_POST,
 } from '../actions/actionTypes';
 
 function posts(state={
@@ -13,6 +15,9 @@ function posts(state={
   all: [],
   new: {
     slug: '',
+    success: false,
+  },
+  edit: {
     success: false,
   },
   delete: {
@@ -51,6 +56,20 @@ function posts(state={
         ...state,
         new: {
           slug: action.payload.slug,
+          success: !action.payload.error,
+        },
+      };
+    case REQUEST_EDIT_POST:
+      return {
+        ...state,
+        edit: {
+          success: false,
+        },
+      };
+    case RECEIVE_EDIT_POST:
+      return {
+        ...state,
+        edit: {
           success: !action.payload.error,
         },
       };

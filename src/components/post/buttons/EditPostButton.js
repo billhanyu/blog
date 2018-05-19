@@ -10,7 +10,7 @@ class EditPostButton extends Component {
         label='Edit'
         primary={true}
         onClick={() => {
-          this.props.history.push(`/editPost/${this.props.slug}`);
+          this.props.history.push(`/editpost/${this.props.slug}`);
         }}
       />
     );

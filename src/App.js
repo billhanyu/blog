@@ -60,6 +60,11 @@ class App extends Component {
                   component={EditPost}
                 />
                 <Route
+                  name='editpost'
+                  path='/editpost/:post'
+                  component={EditPost}
+                />
+                <Route
                   component={NoMatch}
                 />
               </Switch>
