@@ -12,6 +12,7 @@ import Auth from './components/routes/Auth';
 import EditPost from './components/routes/EditPost';
 import AppSnackBar from './components/common/AppSnackBar';
 import CookieHandler from './CookieHandler';
+import NewPost from './components/routes/NewPost';
 
 const store = configureStore();
 
@@ -57,7 +58,7 @@ class App extends Component {
                 <Route
                   name='newpost'
                   path='/newpost'
-                  component={EditPost}
+                  component={NewPost}
                 />
                 <Route
                   name='editpost'

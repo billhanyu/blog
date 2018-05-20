@@ -56,7 +56,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getComments: (slug) => dispatch(getComments(slug)),
+    getComments: slug => dispatch(getComments(slug)),
   };
 };
 

@@ -153,6 +153,7 @@ export function submitPost(title, body) {
       .then(response => {
         dispatch({ type: RECEIVE_SUBMIT_POST, payload: { slug: response.data.slug }});
         dispatch(getPost(response.data.slug));
+        dispatch(displayMessage('Posted'));
       })
       .catch(err => {
         dispatch({ type: RECEIVE_SUBMIT_POST, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
@@ -170,8 +171,8 @@ export function editPost(slug, title, body) {
         headers: { Authorization: 'Bearer ' + getState().user.token },
       })
       .then(response => {
-        dispatch({ type: RECEIVE_EDIT_POST, payload: { slug: response.data.slug } });
-        dispatch(getPost(response.data.slug));
+        dispatch({ type: RECEIVE_EDIT_POST, payload: { slug } });
+        dispatch(displayMessage('Post Updated'));
       })
       .catch(err => {
         dispatch({ type: RECEIVE_EDIT_POST, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
