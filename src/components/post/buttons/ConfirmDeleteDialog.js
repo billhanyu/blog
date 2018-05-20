@@ -11,6 +11,12 @@ class ConfirmDeleteDialog extends Component {
     this.requested = false;
   }
 
+  componentWillReceiveProps(newProps) {
+    if (this.requested && newProps.success) {
+      newProps.history.push('/');
+    }
+  }
+
   render() {
     const actions = [
       <FlatButton
@@ -30,10 +36,6 @@ class ConfirmDeleteDialog extends Component {
         }}
       />,
     ];
-
-    if (this.requested && this.props.success) {
-      this.props.history.push('/');
-    }
 
     return (
       <Dialog
