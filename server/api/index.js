@@ -4,6 +4,7 @@ const router = new express.Router();
 router.use('/user', require('./users'));
 router.use('/posts', require('./posts'));
 router.use('/tags', require('./tags'));
+router.use('/uploads', require('./uploads'));
 
 // error handlers
 // Catch unauthorised errors
