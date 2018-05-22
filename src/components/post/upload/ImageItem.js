@@ -2,17 +2,10 @@ import React, { Component } from 'react';
 import { ListItem } from 'material-ui/List';
 const { baseURL } = require('../../../config');
 import PropTypes from 'prop-types';
-// import FlatButton from 'material-ui/FlatButton';
+import CopyIcon from 'material-ui/svg-icons/content/content-copy';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 class ImageItem extends Component {
-  constructor(props) {
-    super(props);
-    this.copyPath = this.copyPath.bind(this);
-  }
-
-  copyPath() {
-  }
-
   render() {
     const url = `${baseURL}/${this.props.file}`;
     return (
@@ -23,7 +16,15 @@ class ImageItem extends Component {
           width='300px'
           height='auto'
         />
-        <p>{url}</p>
+        <div>
+          <CopyToClipboard text={url}
+            onCopy={() => this.setState({ copied: true })}>
+            <CopyIcon
+              style={{cursor: 'pointer'}}
+            />
+          </CopyToClipboard>
+          <span>{url}</span>
+        </div>
       </ListItem>
     );
   }
