@@ -4,6 +4,14 @@ import React, { Component } from 'react';
 
 class PostBody extends Component {
   componentDidMount() {
+    this.adjustWidth();
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.adjustWidth();
+  }
+
+  adjustWidth() {
     const images = document.getElementsByTagName('img');
     for (let i = 0; i < images.length; i++) {
       const image = images[i];
