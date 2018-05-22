@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton';
+import LinearProgress from 'material-ui/LinearProgress';
 import FileList from './FileList';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -15,13 +16,24 @@ class UploadFiles extends Component {
     super(props);
     this.state = {
       files: [],
+      progress: 0,
+      uploading: false,
     };
     this.changeFile = this.changeFile.bind(this);
     this.onUpload = this.onUpload.bind(this);
+    this.onUploadProgress = this.onUploadProgress.bind(this);
   }
 
   changeFile(e) {
     this.file = e.target.files[0];
+  }
+
+  onUploadProgress(progressEvent) {
+    // progress is from 0 to 100
+    const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+    this.setState({
+      progress,
+    });
   }
 
   onUpload() {
@@ -30,21 +42,29 @@ class UploadFiles extends Component {
       return;
     }
 
+    this.setState({
+      uploading: true,
+    });
+
     const data = new FormData();
     data.set('upload', this.file);
     instance.post('/uploads', data, {
       headers: { Authorization: 'Bearer ' + this.props.token },
+      onUploadProgress: this.onUploadProgress,
     })
       .then(response => {
         const files = this.state.files.slice();
         files.push(response.data.path);
         this.setState({
           files,
+          uploading: false,
         });
-        console.log(files);
       })
       .catch(err => {
         this.props.displayMessage(err.response.data.message);
+        this.setState({
+          uploading: false,
+        });
       });
   }
 
@@ -58,6 +78,10 @@ class UploadFiles extends Component {
           primary={true}
           onClick={this.onUpload}
         />
+        {
+          this.state.uploading &&
+          <LinearProgress mode='determinate' value={this.state.progress} />
+        }
         <FileList files={this.state.files} />
       </div>
     );
