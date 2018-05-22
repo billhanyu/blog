@@ -1,4 +1,4 @@
-const ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg'];
+const ALLOWED_EXTENSIONS = ['png', 'jpg', 'gif', 'jpeg'];
 const MAX_SIZE = 5000000; // 5MB
 
 module.exports = {
