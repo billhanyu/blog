@@ -4,6 +4,8 @@ const { baseURL } = require('../../../config');
 import PropTypes from 'prop-types';
 import CopyIcon from 'material-ui/svg-icons/content/content-copy';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { displayMessage } from '../../../actions/actions';
+import { connect } from 'react-redux';
 
 class ImageItem extends Component {
   render() {
@@ -18,7 +20,7 @@ class ImageItem extends Component {
         />
         <div>
           <CopyToClipboard text={url}
-            onCopy={() => this.setState({ copied: true })}>
+            onCopy={() => this.props.displayMessage('Copied to clipboard!')}>
             <CopyIcon
               style={{cursor: 'pointer'}}
             />
@@ -30,8 +32,19 @@ class ImageItem extends Component {
   }
 }
 
-ImageItem.propTypes = {
-  file: PropTypes.string,
+const mapStateToProps = state => {
+  return {};
 };
 
-export default ImageItem;
+const mapDispatchToProps = dispatch => {
+  return {
+    displayMessage: message => dispatch(displayMessage(message)),
+  };
+};
+
+ImageItem.propTypes = {
+  file: PropTypes.string,
+  displayMessage: PropTypes.func,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImageItem);

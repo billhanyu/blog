@@ -44,6 +44,7 @@ class UploadFiles extends Component {
 
     this.setState({
       uploading: true,
+      progress: 0,
     });
 
     const data = new FormData();
