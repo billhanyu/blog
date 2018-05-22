@@ -3,10 +3,11 @@ const router = new express.Router();
 const fs = require('fs');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
+const auth = require('../auth');
 
 const { ALLOWED_EXTENSIONS, MAX_SIZE } = require('../config');
 
-router.post('/', upload.single('upload'), (req, res, next) => {
+router.post('/', [auth.admin, upload.single('upload')], (req, res, next) => {
   const filename = req.file.originalname;
   const path = req.file.path;
 

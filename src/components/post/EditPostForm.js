@@ -7,6 +7,7 @@ import TextField from 'material-ui/TextField';
 import NavigationMenu from '../NavigationMenu';
 import RaisedButton from 'material-ui/RaisedButton';
 import Unauthorized from '../common/Unauthorized';
+import UploadFiles from './upload/UploadFiles';
 
 class EditPostForm extends Component {
   constructor(props) {
@@ -94,6 +95,8 @@ class EditPostForm extends Component {
                 primary={true}
                 onClick={this.onSubmit}
               />
+              <div style={{height: 50}} />
+              <UploadFiles />
             </CardText>
           </Card>
         </div>

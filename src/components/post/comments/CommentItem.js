@@ -16,8 +16,7 @@ class CommentItem extends Component {
         disabled={true}
         primaryText={body}
         secondaryText={bottomText}
-      >
-      </ListItem>
+      />
     );
   }
 }
