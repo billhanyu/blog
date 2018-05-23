@@ -127,10 +127,9 @@ class NavigationMenu extends Component {
               color='inherit'
               aria-label='Menu'
               className={classes.menuButton}
+              onClick={this.handleOpen}
             >
-              <MenuIcon
-                onClick={this.handleOpen}
-              />
+              <MenuIcon />
             </IconButton>
             <Typography variant='title' color='inherit' className={classes.flex}>
               {blogName}
