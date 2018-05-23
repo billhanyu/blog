@@ -4,6 +4,8 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import { connect } from 'react-redux';
 
 const styles = {
   container: {
@@ -31,6 +33,10 @@ class LogInForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentWillMount() {
+    this.submitted = false;
+  }
+
   handleTextChange(e, name) {
     const newState = Object.assign({}, this.state);
     newState[name] = e.target.value;
@@ -52,77 +58,92 @@ class LogInForm extends Component {
     } else {
       this.props.onSubmit(this.state.email, this.state.password);
     }
+    this.submitted = true;
   }
 
   render() {
     const { classes } = this.props;
     return (
-      <div style={{marginTop: 40}} className={classes.container}>
-        <TextField
-          required
-          placeholder='lucy.zhang3@duke.edu'
-          error={this.state.emailErrorText !== ''}
-          label='E-Mail'
-          onChange={e => this.handleTextChange(e, 'email')}
-          className={classes.width}
-        />
+      <div>
         {
-          this.props.signup &&
-          <div>
-            <TextField
-              placeholder='Lucy Zhang'
-              label='Name'
-              onChange={e => this.handleTextChange(e, 'name')}
-              className={classes.width}
-            />
-          </div>
+          this.submitted && !this.props.token && !this.props.error &&
+          <LinearProgress
+            color='secondary'
+          />
         }
-        <TextField
-          required
-          placeholder='password'
-          type='password'
-          error={this.state.passwordErrorText !== ''}
-          label='Password'
-          onChange={e => this.handleTextChange(e, 'password')}
-          className={classes.width}
-        />
-        <div
-          style={{
-            height: 40,
-          }}
-          className={classes.width}
-        >
-          <p style={{color: 'red'}}>
-            {this.props.error}
-          </p>
+        <div style={{marginTop: 40}} className={classes.container}>
+          <TextField
+            required
+            placeholder='lucy.zhang3@duke.edu'
+            error={this.state.emailErrorText !== ''}
+            label='E-Mail'
+            onChange={e => this.handleTextChange(e, 'email')}
+            className={classes.width}
+          />
+          {
+            this.props.signup &&
+            <div>
+              <TextField
+                placeholder='Lucy Zhang'
+                label='Name'
+                onChange={e => this.handleTextChange(e, 'name')}
+                className={classes.width}
+              />
+            </div>
+          }
+          <TextField
+            required
+            placeholder='password'
+            type='password'
+            error={this.state.passwordErrorText !== ''}
+            label='Password'
+            onChange={e => this.handleTextChange(e, 'password')}
+            className={classes.width}
+          />
+          <div
+            style={{
+              height: 40,
+            }}
+            className={classes.width}
+          >
+            <p style={{color: 'red'}}>
+              {this.props.error}
+            </p>
+          </div>
+          <Button
+            style={{width: 200}}
+            variant='raised'
+            color='primary'
+            onClick={this.handleSubmit}
+          >
+            {this.props.signup ? 'Sign Up' : 'Log In'}
+          </Button>
+          <br /><br />
+          {
+            !this.props.signup &&
+            <div>
+              <span>Not a user?</span>
+              <Button
+                variant='raised'
+                color='secondary'
+                style={{ width: 100, marginLeft: 50, display: 'inline-block' }}
+                onClick={() => {
+                  this.props.history.push('/signup');
+                }}
+              >Sign Up</Button>
+            </div>
+          }
         </div>
-        <Button
-          style={{width: 200}}
-          variant='raised'
-          color='primary'
-          onClick={this.handleSubmit}
-        >
-          {this.props.signup ? 'Sign Up' : 'Log In'}
-        </Button>
-        <br /><br />
-        {
-          !this.props.signup &&
-          <div>
-            <span>Not a user?</span>
-            <Button
-              variant='raised'
-              color='secondary'
-              style={{ width: 100, marginLeft: 50, display: 'inline-block' }}
-              onClick={() => {
-                this.props.history.push('/signup');
-              }}
-            >Sign Up</Button>
-          </div>
-        }
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    ...state.user,
+  };
+};
 
 LogInForm.propTypes = {
   onSubmit: PropTypes.func,
@@ -130,6 +151,7 @@ LogInForm.propTypes = {
   error: PropTypes.string,
   history: PropTypes.object,
   classes: PropTypes.object,
+  token: PropTypes.string,
 };
 
-export default withStyles(styles)(withRouter(LogInForm));
+export default withStyles(styles)(withRouter(connect(mapStateToProps)(LogInForm)));
