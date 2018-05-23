@@ -8,7 +8,7 @@ Blog built with React+Express+MongoDB.
 Frontend:
 - React Router
 - React Redux
-- Material UI (v0.20)
+- Material UI (~~v0.20~~v1.0.0 Don't ask about migration. I don't want to talk about it.)
 
 Backend:
 - Express
