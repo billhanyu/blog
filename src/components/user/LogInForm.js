@@ -28,13 +28,10 @@ class LogInForm extends Component {
       name: '',
       emailErrorText: '',
       passwordErrorText: '',
+      submitted: false,
     };
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentWillMount() {
-    this.submitted = false;
   }
 
   handleTextChange(e, name) {
@@ -58,7 +55,9 @@ class LogInForm extends Component {
     } else {
       this.props.onSubmit(this.state.email, this.state.password);
     }
-    this.submitted = true;
+    this.setState({
+      submitted: true,
+    });
   }
 
   render() {
@@ -66,7 +65,7 @@ class LogInForm extends Component {
     return (
       <div>
         {
-          this.submitted && !this.props.token && !this.props.error &&
+          this.state.submitted && !this.props.token && !this.props.error &&
           <LinearProgress
             color='secondary'
           />
