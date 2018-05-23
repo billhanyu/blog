@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -86,24 +86,25 @@ class LogInForm extends Component {
             {this.props.error}
           </p>
         </div>
-        <RaisedButton
-          label={this.props.signup ? 'Sign Up' : 'Log In'}
-          primary={true}
+        <Button
+          variant='raised'
+          color='primary'
           style={{ width: 200, margin: '0 auto', display: 'block' }}
           onClick={this.handleSubmit}
-        /><br /><br />
+        >{this.props.signup ? 'Sign Up' : 'Log In'}</Button>
+        <br /><br />
         {
           !this.props.signup &&
           <div style={center}>
             <span>Not a user?</span>
-            <RaisedButton
-              label='Sign Up'
-              secondary={true}
+            <Button
+              variant='raised'
+              color='secondary'
               style={{ width: 100, marginLeft: 50, display: 'inline-block' }}
               onClick={() => {
                 this.props.history.push('/signup');
               }}
-            />
+            >Sign Up</Button>
           </div>
         }
       </div>

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Card, CardTitle, CardText } from 'material-ui/Card';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
 import { centeredCard } from '../common/styles';
-import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField';
 import NavigationMenu from '../NavigationMenu';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from '@material-ui/core/Button';
 import Unauthorized from '../common/Unauthorized';
 import UploadFiles from './upload/UploadFiles';
 
@@ -62,14 +64,14 @@ class EditPostForm extends Component {
           <Card
             style={centeredCard}
           >
-            <CardTitle
+            <CardHeader
               title={this.props.mode === 'new' ? 'New Post' : 'Edit Post'}
               titleStyle={{
                 fontWeight: 600,
                 fontSize: 30,
               }}
             />
-            <CardText>
+            <CardContent>
               <TextField
                 style={{
                   fontWeight: 400,
@@ -90,14 +92,14 @@ class EditPostForm extends Component {
                 hintText='Post Body. Markdown is supported'
                 errorText={this.state.bodyErrorText}
               />
-              <RaisedButton
-                label='Post'
-                primary={true}
+              <Button
+                variant='raised'
+                color='primary'
                 onClick={this.onSubmit}
-              />
+              >Post</Button>
               <div style={{height: 50}} />
               <UploadFiles />
-            </CardText>
+            </CardContent>
           </Card>
         </div>
       );

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { postComment } from '../../../actions/actions';
 import { withRouter } from 'react-router-dom';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 class EditComment extends Component {
   constructor(props) {
@@ -68,12 +68,12 @@ class EditComment extends Component {
               rows={1}
               rowsMax={4}
             /><br />
-            <RaisedButton
-              label='Comment'
+            <Button
+              variant='raised'
               style={{ float: 'right' }}
-              primary={true}
+              color='primary'
               onClick={this.onSubmit}
-            />
+            >Comment</Button>
           </div>
         }
       </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import FlatButton from 'material-ui/FlatButton';
-import LinearProgress from 'material-ui/LinearProgress';
+import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import FileList from './FileList';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -74,11 +74,10 @@ class UploadFiles extends Component {
       <div>
         <h3>Attachments</h3>
         <input type='file' onChange={this.changeFile} />
-        <FlatButton
-          label='Upload'
-          primary={true}
+        <Button
+          color='primary'
           onClick={this.onUpload}
-        />
+        >Upload</Button>
         {
           this.state.uploading &&
           <LinearProgress mode='determinate' value={this.state.progress} />

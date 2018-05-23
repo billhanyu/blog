@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FlatButton from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
 import ConfirmDeleteDialog from './ConfirmDeleteDialog';
 import PropTypes from 'prop-types';
 
@@ -28,11 +28,10 @@ class DeletePostButton extends Component {
   render() {
     return (
       <div style={{display: 'inline-block'}}>
-        <FlatButton
-          secondary={true}
-          label='Delete'
+        <Button
+          color='secondary'
           onClick={this.onDeleteButtonClick}
-        />
+        >Delete</Button>
         <ConfirmDeleteDialog
           slug={this.props.slug}
           open={this.state.dialogOpen}

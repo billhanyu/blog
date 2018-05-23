@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, CardText, CardActions } from 'material-ui/Card';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import PostBody from './PostBody';
@@ -24,7 +27,7 @@ class PostCard extends Component {
       <Card
         style={centeredCard}
       >
-        <CardTitle
+        <CardHeader
           onClick={() => {
             this.props.history.push(`/posts/${slug}`);
           }}
@@ -34,7 +37,7 @@ class PostCard extends Component {
             fontWeight: 600,
             fontSize: 30,
           }}
-          subtitle={author.name || author.email}
+          subheader={author.name || author.email}
         />
         {
           this.props.admin &&
@@ -43,12 +46,12 @@ class PostCard extends Component {
             <DeletePostButton slug={slug} />
           </CardActions>
         }
-        <CardText>
+        <CardContent>
           <PostBody body={body} />
-        </CardText>
-        <CardText>
+        </CardContent>
+        <CardContent>
           <TimeStamps createdAt={createdAt} updatedAt={updatedAt} />
-        </CardText>
+        </CardContent>
       </Card>
     );
   }

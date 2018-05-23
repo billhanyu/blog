@@ -1,18 +1,35 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import { List, ListItem, makeSelectable } from 'material-ui/List';
-import SvgIcon from 'material-ui/SvgIcon';
-import Home from 'material-ui/svg-icons/action/home';
-import Account from 'material-ui/svg-icons/action/account-circle';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import Home from '@material-ui/icons/Home';
+import Account from '@material-ui/icons/AccountCircle';
 const { blogName, githubLink } = require('../config');
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Logged from './user/Logged';
 import LogInButton from './user/LogInButton';
 
-const SelectableList = makeSelectable(List);
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  flex: {
+    flex: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+};
 
 class NavigationMenu extends Component {
   constructor(props) {
@@ -42,6 +59,7 @@ class NavigationMenu extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
         <Drawer
@@ -50,7 +68,7 @@ class NavigationMenu extends Component {
           open={this.state.open}
           onRequestChange={(open) => this.setState({ open })}
         >
-          <SelectableList
+          <List
             value={this.state.selectedIndex}
             onChange={this.handleRequestChange}
           >
@@ -90,13 +108,25 @@ class NavigationMenu extends Component {
                 }}
               />
             }
-          </SelectableList>
+          </List>
         </Drawer>
-        <AppBar
-          title={blogName}
-          onLeftIconButtonClick={this.handleToggle}
-          iconElementRight={this.props.token ? <Logged /> : <LogInButton />}
-        />
+        <AppBar position='static'>
+          <Toolbar>
+            <IconButton
+              color='inherit'
+              aria-label='Menu'
+              className={classes.menuButton}
+            >
+              <MenuIcon
+                onClick={this.handleToggle}
+              />
+            </IconButton>
+            <Typography variant='title' color='inherit' className={classes.flex}>
+              {blogName}
+            </Typography>
+            {this.props.token ? <Logged /> : <LogInButton />}
+          </Toolbar>
+        </AppBar>
       </div>
     );
   }
@@ -107,6 +137,7 @@ NavigationMenu.propTypes = {
   selectedIndex: PropTypes.number.isRequired,
   token: PropTypes.string,
   admin: PropTypes.bool,
+  classes: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -115,4 +146,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(withRouter(NavigationMenu));
+export default withStyles(styles)(connect(mapStateToProps)(withRouter(NavigationMenu)));

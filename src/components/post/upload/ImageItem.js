@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { ListItem } from 'material-ui/List';
+import ListItem from '@material-ui/core/ListItem';
 const { baseURL } = require('../../../config');
 import PropTypes from 'prop-types';
-import CopyIcon from 'material-ui/svg-icons/content/content-copy';
+import CopyIcon from '@material-ui/icons/ContentCopy';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { displayMessage } from '../../../actions/actions';
 import { connect } from 'react-redux';

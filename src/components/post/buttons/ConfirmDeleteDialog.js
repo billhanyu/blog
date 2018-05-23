@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Dialog from '@material-ui/core/Dialog';
+import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { deletePost } from '../../../actions/actions';
@@ -19,22 +19,20 @@ class ConfirmDeleteDialog extends Component {
 
   render() {
     const actions = [
-      <FlatButton
+      <Button
         key='cancel'
-        label="Cancel"
-        primary={true}
+        color='primary'
         onClick={this.props.closeDialog}
-      />,
-      <FlatButton
+      >Cancel</Button>,
+      <Button
         key='delete'
-        label="Delete"
-        secondary={true}
+        color='secondary'
         onClick={() => {
           this.requested = true;
           this.props.deletePost(this.props.slug);
           this.props.closeDialog();
         }}
-      />,
+      >Delete</Button>,
     ];
 
     return (

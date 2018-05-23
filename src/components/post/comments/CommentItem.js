@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListItem } from 'material-ui/List';
+import ListItem from '@material-ui/core/ListItem';
 import PropTypes from 'prop-types';
 
 class CommentItem extends Component {

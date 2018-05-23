@@ -1,20 +1,17 @@
 import { withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
-import FlatButton from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 
 class LogInButton extends Component {
   render() {
     return (
-      <FlatButton
-        labelStyle={{
-          color: 'white',
-        }}
-        label="Login"
+      <Button
+        style={{color: 'white'}}
         onClick={() => {
           this.props.history.push('/login');
         }}
-      />
+      >Log In</Button>
     );
   }
 }

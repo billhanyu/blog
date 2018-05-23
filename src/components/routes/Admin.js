@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import NavigationMenu from '../NavigationMenu';
-import Paper from 'material-ui/Paper';
+import Paper from '@material-ui/core/Paper';
 import { centeredCard } from '../common/styles';
-import RaisedButton from 'material-ui/RaisedButton';
+import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import Unauthorized from '../common/Unauthorized';
 
@@ -16,13 +16,13 @@ class Admin extends Component {
           <Paper
             style={centeredCard}
           >
-            <RaisedButton
-              label='New Post'
-              primary={true}
+            <Button
+              variant='raised'
+              color='primary'
               onClick={() => {
                 this.props.history.push('/newpost');
               }}
-            />
+            >New Post</Button>
           </Paper>
         </div>
       );

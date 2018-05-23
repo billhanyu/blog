@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, CardText } from 'material-ui/Card';
-import { List } from 'material-ui/List';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import List from '@material-ui/core/List';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import CommentItem from './CommentItem';
@@ -18,14 +20,14 @@ class Comments extends Component {
       <Card
         style={centeredCard}
       >
-        <CardTitle
+        <CardHeader
           title='Comments'
           titleStyle={{
             fontWeight: 600,
             fontSize: 25,
           }}
         />
-        <CardText>
+        <CardContent>
           <List>
             {
               this.props.comments.map((comment, idx) => {
@@ -38,10 +40,10 @@ class Comments extends Component {
               })
             }
           </List>
-        </CardText>
-        <CardText>
+        </CardContent>
+        <CardContent>
           <EditComment slug={this.props.slug} />
-        </CardText>
+        </CardContent>
       </Card>
     );
   }

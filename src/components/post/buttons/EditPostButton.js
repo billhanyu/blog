@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import FlatButton from 'material-ui/FlatButton';
+import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 class EditPostButton extends Component {
   render() {
     return (
-      <FlatButton
-        label='Edit'
-        primary={true}
+      <Button
+        color='primary'
         onClick={() => {
           this.props.history.push(`/editpost/${this.props.slug}`);
         }}
-      />
+      >Edit</Button>
     );
   }
 }
