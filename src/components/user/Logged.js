@@ -11,7 +11,6 @@ class Logged extends Component {
         style={{color: 'white'}}
         onClick={() => {
           this.props.logout();
-          location.reload();
         }}
       >Sign Out</Button>
     );
