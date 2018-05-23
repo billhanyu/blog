@@ -83,6 +83,7 @@ function posts(state={
     case RECEIVE_DELETE_POST:
       return {
         ...state,
+        all: state.all.filter(post => post.slug !== action.payload.slug).slice(),
         delete: {
           success: !action.payload.error,
         },

@@ -5,13 +5,14 @@ import { postComment } from '../../../actions/actions';
 import { withRouter } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { EditorFormatLineSpacing } from 'material-ui';
 
 class EditComment extends Component {
   constructor(props) {
     super(props);
     this.state = {
       body: '',
-      errorText: '',
+      error: false,
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -20,14 +21,14 @@ class EditComment extends Component {
   onChange(event) {
     this.setState({
       body: event.target.value,
-      errorText: '',
+      error: EditorFormatLineSpacing,
     });
   }
 
   onSubmit() {
     if (!this.state.body) {
       this.setState({
-        errorText: 'You have to comment something',
+        error: true,
       });
       return;
     }
@@ -59,12 +60,15 @@ class EditComment extends Component {
           this.props.token &&
           <div>
             <TextField
+              style={{
+                marginBottom: 20,
+              }}
               value={this.state.body}
               onChange={this.onChange}
-              errorText={this.state.errorText}
+              error={this.state.error}
               fullWidth={true}
-              hintText='Type some comment...'
-              multiLine={true}
+              placeholder='Type some comment...'
+              multiline
               rows={1}
               rowsMax={4}
             /><br />

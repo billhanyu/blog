@@ -22,10 +22,6 @@ class Comments extends Component {
       >
         <CardHeader
           title='Comments'
-          titleStyle={{
-            fontWeight: 600,
-            fontSize: 25,
-          }}
         />
         <CardContent>
           <List>

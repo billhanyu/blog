@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -18,32 +22,39 @@ class ConfirmDeleteDialog extends Component {
   }
 
   render() {
-    const actions = [
-      <Button
-        key='cancel'
-        color='primary'
-        onClick={this.props.closeDialog}
-      >Cancel</Button>,
-      <Button
-        key='delete'
-        color='secondary'
-        onClick={() => {
-          this.requested = true;
-          this.props.deletePost(this.props.slug);
-          this.props.closeDialog();
-        }}
-      >Delete</Button>,
-    ];
-
     return (
       <Dialog
-        title="Confirm Deletion"
-        actions={actions}
-        modal={false}
         open={this.props.open}
-        onRequestClose={this.props.closeDialog}
+        onClose={this.props.closeDialog}
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
       >
-        Are you sure you want to delete this post?
+        <DialogTitle id='alert-dialog-title'>
+          Confirm Deletion
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-description'>
+            Are you sure you want to delete this post?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={this.props.closeDialog}
+            color='primary'
+            autoFocus
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              this.requested = true;
+              this.props.deletePost(this.props.slug);
+              this.props.closeDialog();
+            }}
+          color='secondary'>
+            Delete
+          </Button>
+        </DialogActions>
       </Dialog>
     );
   }

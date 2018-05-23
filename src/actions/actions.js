@@ -188,7 +188,7 @@ export function deletePost(slug) {
     })
       .then(response => {
         dispatch(displayMessage('Post Deleted'));
-        dispatch({ type: RECEIVE_DELETE_POST, payload: {} });
+        dispatch({ type: RECEIVE_DELETE_POST, payload: { slug } });
       })
       .catch(err => {
         dispatch({ type: RECEIVE_DELETE_POST, payload: { error: getMessageFromErr(err) || NETWORK_ERROR }});

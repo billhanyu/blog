@@ -66,31 +66,31 @@ class EditPostForm extends Component {
           >
             <CardHeader
               title={this.props.mode === 'new' ? 'New Post' : 'Edit Post'}
-              titleStyle={{
-                fontWeight: 600,
-                fontSize: 30,
-              }}
             />
             <CardContent>
               <TextField
                 style={{
                   fontWeight: 400,
                   fontSize: 25,
+                  marginBottom: 20,
                 }}
                 fullWidth={true}
                 value={this.state.title}
                 onChange={this.onChangeTitle}
-                hintText='Post Title'
-                errorText={this.state.titleErrorText}
+                placeholder='Post Title'
+                error={this.state.titleErrorText !== ''}
               />
               <TextField
+                style={{
+                  marginBottom: 20,
+                }}
                 fullWidth={true}
-                multiLine={true}
-                rows={15}
+                multiline
+                rows={25}
                 value={this.state.body}
                 onChange={this.onChangeBody}
-                hintText='Post Body. Markdown is supported'
-                errorText={this.state.bodyErrorText}
+                placeholder='Post Body. Markdown is supported'
+                error={this.state.bodyErrorText !== ''}
               />
               <Button
                 variant='raised'

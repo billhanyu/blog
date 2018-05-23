@@ -33,10 +33,6 @@ class PostCard extends Component {
           }}
           style={{cursor: 'pointer'}}
           title={title}
-          titleStyle={{
-            fontWeight: 600,
-            fontSize: 30,
-          }}
           subheader={author.name || author.email}
         />
         {

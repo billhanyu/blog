@@ -20,7 +20,7 @@ class AppSnackBar extends Component {
         open={this.props.open}
         message={this.props.message}
         autoHideDuration={2500}
-        onRequestClose={this.handleRequestClose}
+        onClose={this.handleRequestClose}
       />
     );
   }

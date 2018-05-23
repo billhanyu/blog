@@ -11,7 +11,7 @@ class ImageItem extends Component {
   render() {
     const url = `${baseURL}/${this.props.file}`;
     return (
-      <ListItem disabled={true}>
+      <ListItem>
         <img
           src={url}
           alt={this.props.file}

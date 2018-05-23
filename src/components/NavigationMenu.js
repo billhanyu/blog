@@ -37,7 +37,7 @@ class NavigationMenu extends Component {
   constructor(props) {
     super(props);
     this.handleRequestChange = this.handleRequestChange.bind(this);
-    this.handleToggle = this.handleToggle.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.state = {
       selectedIndex: props.selectedIndex,
@@ -45,8 +45,8 @@ class NavigationMenu extends Component {
     };
   }
 
-  handleToggle() {
-    this.setState({ open: !this.state.open });
+  handleOpen() {
+    this.setState({ open: true });
   }
 
   handleClose() {
@@ -129,7 +129,7 @@ class NavigationMenu extends Component {
               className={classes.menuButton}
             >
               <MenuIcon
-                onClick={this.handleToggle}
+                onClick={this.handleOpen}
               />
             </IconButton>
             <Typography variant='title' color='inherit' className={classes.flex}>

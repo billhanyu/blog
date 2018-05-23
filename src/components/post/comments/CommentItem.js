@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import PropTypes from 'prop-types';
 
 class CommentItem extends Component {
@@ -12,11 +13,12 @@ class CommentItem extends Component {
 
     const bottomText = `${author.name || author.email} at ${new Date(createdAt).toLocaleString()}`;
     return (
-      <ListItem
-        disabled={true}
-        primaryText={body}
-        secondaryText={bottomText}
-      />
+      <ListItem>
+        <ListItemText
+          primary={body}
+          secondary={bottomText}
+        />
+      </ListItem>
     );
   }
 }

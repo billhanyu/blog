@@ -3,11 +3,18 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 
-const center = {
-  margin: '0 auto',
-  width: 400,
-  display: 'block',
+const styles = {
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  width: {
+    width: 400,
+  },
 };
 
 class LogInForm extends Component {
@@ -29,8 +36,7 @@ class LogInForm extends Component {
     newState[name] = e.target.value;
     this.setState({
       ...newState,
-    });
-    this.checkInput();
+    }, () =>this.checkInput());
   }
 
   checkInput() {
@@ -49,53 +55,59 @@ class LogInForm extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
-      <div style={{marginTop: 40}}>
+      <div style={{marginTop: 40}} className={classes.container}>
         <TextField
-          hintText='lucy.zhang3@duke.edu'
-          errorText={this.state.emailErrorText}
-          floatingLabelText='E-Mail'
+          required
+          placeholder='lucy.zhang3@duke.edu'
+          error={this.state.emailErrorText !== ''}
+          label='E-Mail'
           onChange={e => this.handleTextChange(e, 'email')}
-          style={center}
-        /><br />
+          className={classes.width}
+        />
         {
           this.props.signup &&
           <div>
             <TextField
-              hintText='Lucy Zhang'
-              floatingLabelText='Name'
+              placeholder='Lucy Zhang'
+              label='Name'
               onChange={e => this.handleTextChange(e, 'name')}
-              style={center}
-            /><br />
+              className={classes.width}
+            />
           </div>
         }
         <TextField
-          hintText='password'
+          required
+          placeholder='password'
           type='password'
-          errorText={this.state.passwordErrorText}
-          floatingLabelText='Password'
+          error={this.state.passwordErrorText !== ''}
+          label='Password'
           onChange={e => this.handleTextChange(e, 'password')}
-          style={center}
-        /><br />
+          className={classes.width}
+        />
         <div
           style={{
-            ...center,
             height: 40,
-          }}>
+          }}
+          className={classes.width}
+        >
           <p style={{color: 'red'}}>
             {this.props.error}
           </p>
         </div>
         <Button
+          style={{width: 200}}
           variant='raised'
           color='primary'
-          style={{ width: 200, margin: '0 auto', display: 'block' }}
           onClick={this.handleSubmit}
-        >{this.props.signup ? 'Sign Up' : 'Log In'}</Button>
+        >
+          {this.props.signup ? 'Sign Up' : 'Log In'}
+        </Button>
         <br /><br />
         {
           !this.props.signup &&
-          <div style={center}>
+          <div>
             <span>Not a user?</span>
             <Button
               variant='raised'
@@ -117,6 +129,7 @@ LogInForm.propTypes = {
   signup: PropTypes.bool,
   error: PropTypes.string,
   history: PropTypes.object,
+  classes: PropTypes.object,
 };
 
-export default withRouter(LogInForm);
+export default withStyles(styles)(withRouter(LogInForm));
