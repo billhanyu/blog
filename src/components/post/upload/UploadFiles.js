@@ -80,7 +80,7 @@ class UploadFiles extends Component {
         >Upload</Button>
         {
           this.state.uploading &&
-          <LinearProgress mode='determinate' value={this.state.progress} />
+          <LinearProgress variant='determinate' value={this.state.progress} />
         }
         <FileList files={this.state.files} />
       </div>
