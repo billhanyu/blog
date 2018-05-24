@@ -15,7 +15,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <NavigationMenu selectedIndex={1}/>
+        <NavigationMenu selectedIndex={1} />
         {
           !this.props.ready && !this.props.error &&
           <Loading />

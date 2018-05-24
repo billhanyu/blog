@@ -121,7 +121,7 @@ class NavigationMenu extends Component {
             </List>
           </div>
         </Drawer>
-        <AppBar position='static'>
+        <AppBar position='fixed'>
           <Toolbar>
             <IconButton
               color='inherit'
@@ -137,6 +137,7 @@ class NavigationMenu extends Component {
             {this.props.token ? <Logged /> : <LogInButton />}
           </Toolbar>
         </AppBar>
+        <div style={{height: 60}} />
       </div>
     );
   }
