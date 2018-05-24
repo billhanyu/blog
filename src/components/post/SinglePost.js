@@ -30,7 +30,7 @@ class SinglePost extends Component {
           <PostCard post={this.props.post} />
         }
         {
-          !this.props.error &&
+          title && !this.props.error &&
           <Comments slug={this.props.slug} />
         }
       </div>
