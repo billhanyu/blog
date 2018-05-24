@@ -11,6 +11,7 @@ import { centeredCard } from '../common/styles';
 import { connect } from 'react-redux';
 import EditPostButton from './buttons/EditPostButton';
 import DeletePostButton from './buttons/DeletePostButton';
+import ShareButtons from './ShareButtons';
 
 class PostCard extends Component {
   render() {
@@ -47,6 +48,9 @@ class PostCard extends Component {
         </CardContent>
         <CardContent>
           <TimeStamps createdAt={createdAt} updatedAt={updatedAt} />
+        </CardContent>
+        <CardContent style={{marginTop: -20}}>
+          <ShareButtons slug={slug} />
         </CardContent>
       </Card>
     );
