@@ -40,6 +40,12 @@ Frontend hot reloading is enabled!
 - [ ] like/unlike (API done, no frontend yet)
 - [x] attachments for posts (uploading images to server)
 
+  limit maximum width or height with query params in image links.
+  
+  Example:
+  
+  `![](http://blog.com/image.png?width={maxWidth}&height={maxHeight})`
+
 ## Articles Referenced
 
 - [User Auth Using MongoDB and MEAN Stack](https://www.sitepoint.com/user-authentication-mean-stack/)
