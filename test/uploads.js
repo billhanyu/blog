@@ -3,6 +3,7 @@ const { injectUser } = require('./tools');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const Image = mongoose.model('Image');
+const sizeof = require('buffer-image-size');
 
 describe('uploads', () => {
   let lucy;
@@ -88,7 +89,23 @@ describe('uploads', () => {
       .end((err, res) => {
         res.should.have.status(200);
         assert.equal(res.header['content-type'], 'image/png');
-        assert.equal(res.header['content-length'], 4173457);
+        const dimensions = sizeof(res.body);
+        assert.equal(dimensions.width, 1920);
+        assert.equal(dimensions.height, 1182);
+        assert.equal(res.header['content-length'], 5222663);
+        done();
+      });
+  });
+
+  it('should return image for GET with max width and height', done => {
+    chai.request(server)
+      .get(`/${validPath}?width=500&height=500`)
+      .end((err, res) => {
+        res.should.have.status(200);
+        assert.equal(res.header['content-type'], 'image/png');
+        const dimensions = sizeof(res.body);
+        assert.equal(dimensions.width, 500);
+        assert.equal(dimensions.height, 308);
         done();
       });
   });
