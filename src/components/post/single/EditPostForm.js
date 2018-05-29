@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import { centeredCard } from '../common/styles';
+import { centeredCard } from '../../common/styles';
 import TextField from '@material-ui/core/TextField';
-import NavigationMenu from '../NavigationMenu';
+import NavigationMenu from '../../NavigationMenu';
 import Button from '@material-ui/core/Button';
-import Unauthorized from '../common/Unauthorized';
-import UploadFiles from './upload/UploadFiles';
+import Unauthorized from '../../common/Unauthorized';
+import UploadFiles from './../upload/UploadFiles';
 
 class EditPostForm extends Component {
   constructor(props) {

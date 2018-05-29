@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getPost } from '../../actions/actions';
+import { getPost } from '../../../actions/actions';
 import PropTypes from 'prop-types';
-import ErrorDisplay from '../common/ErrorDisplay';
-import Loading from '../common/Loading';
+import ErrorDisplay from '../../common/ErrorDisplay';
+import Loading from '../../common/Loading';
 import PostCard from './PostCard';
-import Comments from './comments/Comments';
+import Comments from './../comments/Comments';
 
 class SinglePost extends Component {
   componentWillMount() {

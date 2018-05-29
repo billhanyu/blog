@@ -7,10 +7,10 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import PostBody from './PostBody';
 import TimeStamps from './TimeStamps';
-import { centeredCard } from '../common/styles';
+import { centeredCard } from '../../common/styles';
 import { connect } from 'react-redux';
-import EditPostButton from './buttons/EditPostButton';
-import DeletePostButton from './buttons/DeletePostButton';
+import EditPostButton from './../buttons/EditPostButton';
+import DeletePostButton from './../buttons/DeletePostButton';
 import ShareButtons from './ShareButtons';
 
 class PostCard extends Component {

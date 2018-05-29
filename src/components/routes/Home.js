@@ -3,9 +3,9 @@ import NavigationMenu from '../NavigationMenu';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getAllPosts } from '../../actions/actions';
-import PostCard from '../post/PostCard';
 import ErrorDisplay from '../common/ErrorDisplay';
 import Loading from '../common/Loading';
+import PostList from '../post/PostList';
 
 class Home extends Component {
   componentWillMount() {
@@ -26,16 +26,7 @@ class Home extends Component {
             message={this.props.error}
           />
         }
-        {
-          this.props.all.map(post => {
-            return (
-              <PostCard
-                key={post.slug}
-                post={post}
-              />
-            );
-          })
-        }
+        <PostList all={this.props.all} />
       </div>
     );
   }

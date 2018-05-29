@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import NavigationMenu from '../NavigationMenu';
-import SinglePost from '../post/SinglePost';
+import SinglePost from '../post/single/SinglePost';
 
 class Post extends Component {
   constructor(props) {

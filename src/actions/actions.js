@@ -19,6 +19,7 @@ import {
   DISPLAY_MESSAGE,
   TOKEN_FROM_COOKIE,
   LOGOUT,
+  RECEIVE_TAGS,
 } from './actionTypes';
 import { baseURL } from '../config';
 const NETWORK_ERROR = 'Network Error';
@@ -202,4 +203,16 @@ export function closeSnackBar() {
 
 export function displayMessage(message) {
   return { type: DISPLAY_MESSAGE, payload: { message }};
+}
+
+export function requestTags() {
+  return (dispatch, getState) => {
+    instance.get(`/tags`)
+      .then(response => {
+        dispatch({ type: RECEIVE_TAGS, payload: { tags: response.data }});
+      })
+      .catch(err => {
+        dispatch({ type: RECEIVE_TAGS, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
+      });
+  };
 }

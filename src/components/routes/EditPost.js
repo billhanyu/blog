@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { editPost, getPost } from '../../actions/actions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import EditPostForm from '../post/EditPostForm';
+import EditPostForm from '../post/single/EditPostForm';
 import ErrorDisplay from '../common/ErrorDisplay';
 import Loading from '../common/Loading';
 

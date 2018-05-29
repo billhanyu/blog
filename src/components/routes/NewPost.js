@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { submitPost } from '../../actions/actions';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import EditPostForm from '../post/EditPostForm';
+import EditPostForm from '../post/single/EditPostForm';
 
 class NewPost extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-const { siteURL } = require('../../config');
+const { siteURL } = require('../../../config');
 import {
   FacebookShareButton,
   GooglePlusShareButton,
