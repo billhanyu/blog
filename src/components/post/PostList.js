@@ -5,14 +5,18 @@ import PostCard from './single/PostCard';
 class PostList extends Component {
   render() {
     return (
-      this.props.all.map(post => {
-        return (
-          <PostCard
-            key={post.slug}
-            post={post}
-          />
-        );
-      })
+      <div {...this.props}>
+        {
+          this.props.all.map(post => {
+            return (
+              <PostCard
+                key={post.slug}
+                post={post}
+              />
+            );
+          })
+        }
+      </div>
     );
   }
 }

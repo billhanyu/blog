@@ -9,6 +9,7 @@ import PostList from '../post/PostList';
 import TagSelection from '../post/tags/TagSelection';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Fade from '@material-ui/core/Fade';
 
 const styles = {
   root: {
@@ -39,13 +40,12 @@ class Home extends Component {
                   message={this.props.error}
                 />
               }
-              {
-                this.props.ready &&
+              <Fade in={this.props.ready}>
                 <PostList all={this.props.all} />
-              }
+              </Fade>
             </Grid>
             <Grid item xs={12} sm={3}>
-              <TagSelection sm />
+              <TagSelection />
             </Grid>
           </Grid>
         </div>
