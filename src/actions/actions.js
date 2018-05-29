@@ -95,14 +95,18 @@ export function getPost(slug) {
   };
 }
 
-export function getAllPosts() {
+export function getAllPosts(tags) {
   return (dispatch, getState) => {
     dispatch({ type: REQUEST_ALL_POSTS, payload: {} });
-    instance.get(`/posts`, {
+    const body = {
       params: {
         limit: Number.MAX_SAFE_INTEGER,
       },
-    })
+    };
+    if (tags && tags.length > 0) {
+      body.params.tagList = JSON.stringify(tags);
+    }
+    instance.get(`/posts`, body)
       .then(response => {
         dispatch({ type: RECEIVE_ALL_POSTS, payload: response.data });
       })

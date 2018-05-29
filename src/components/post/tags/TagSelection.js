@@ -5,7 +5,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { connect } from 'react-redux';
-import { requestTags } from '../../../actions/actions';
+import { requestTags, getAllPosts } from '../../../actions/actions';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
@@ -33,7 +33,12 @@ class TagSelection extends Component {
   }
 
   handleChange(name, event) {
-    this.setState({ [name]: event.target.checked });
+    this.setState({
+      [name]: event.target.checked,
+    }, () => {
+      const tags = Object.keys(this.state).filter(key => this.state[key]);
+      this.props.getAllPosts(tags);
+    });
   }
 
   render() {
@@ -76,12 +81,14 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     requestTags: () => dispatch(requestTags()),
+    getAllPosts: tags => dispatch(getAllPosts(tags)),
   };
 };
 
 TagSelection.propTypes = {
   all: PropTypes.array,
   requestTags: PropTypes.func,
+  getAllPosts: PropTypes.func,
   classes: PropTypes.object,
 };
 
