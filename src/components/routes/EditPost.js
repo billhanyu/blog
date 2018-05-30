@@ -44,6 +44,7 @@ class EditPost extends Component {
         mode='edit'
         title={this.props.post.title}
         body={this.props.post.body}
+        tagList={this.props.post.tagList}
         onSubmit={this.onSubmit}
       />
     );

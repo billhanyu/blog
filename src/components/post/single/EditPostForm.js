@@ -10,6 +10,8 @@ import NavigationMenu from '../../NavigationMenu';
 import Button from '@material-ui/core/Button';
 import Unauthorized from '../../common/Unauthorized';
 import UploadFiles from './../upload/UploadFiles';
+import EditTags from './tags/EditTags';
+import { requestTags } from '../../../actions/actions';
 
 class EditPostForm extends Component {
   constructor(props) {
@@ -17,12 +19,17 @@ class EditPostForm extends Component {
     this.state = {
       title: props.title,
       body: props.body,
+      tagList: props.tagList,
       titleErrorText: '',
       bodyErrorText: '',
     };
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeBody = this.onChangeBody.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.requestTags();
   }
 
   onChangeTitle(event) {
@@ -80,6 +87,10 @@ class EditPostForm extends Component {
                 placeholder='Post Title'
                 error={this.state.titleErrorText !== ''}
               />
+              <EditTags
+                tagList={this.props.tagList}
+                all={this.props.all}
+              />
               <TextField
                 style={{
                   marginBottom: 20,
@@ -112,6 +123,13 @@ class EditPostForm extends Component {
 const mapStateToProps = state => {
   return {
     ...state.user,
+    ...state.tags,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    requestTags: () => dispatch(requestTags()),
   };
 };
 
@@ -119,8 +137,11 @@ EditPostForm.propTypes = {
   mode: PropTypes.oneOf(['new', 'edit']),
   title: PropTypes.string,
   body: PropTypes.string,
+  tagList: PropTypes.array,
   onSubmit: PropTypes.func,
   admin: PropTypes.bool,
+  requestTags: PropTypes.func,
+  all: PropTypes.array,
 };
 
-export default connect(mapStateToProps)(EditPostForm);
+export default connect(mapStateToProps, mapDispatchToProps)(EditPostForm);
