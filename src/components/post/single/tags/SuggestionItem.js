@@ -14,7 +14,7 @@ class SuggestionItem extends Component {
         selected={isHighlighted}
         component='div'
         style={{
-          fontWeight: isSelected ? 500 : 400,
+          fontWeight: isSelected ? 600 : 400,
         }}
       >
         {suggestion}

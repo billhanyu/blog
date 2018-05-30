@@ -25,9 +25,9 @@ class EditPost extends Component {
     }
   }
 
-  onSubmit(title, body) {
+  onSubmit(title, body, tagList) {
     this.submitted = true;
-    this.props.editPost(this.slug, title, body);
+    this.props.editPost(this.slug, title, body, tagList);
   }
 
   render() {
@@ -62,7 +62,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    editPost: (slug, title, body) => dispatch(editPost(slug, title, body)),
+    editPost: (slug, title, body, tagList) => dispatch(editPost(slug, title, body, tagList)),
     getPost: slug => dispatch(getPost(slug)),
   };
 };

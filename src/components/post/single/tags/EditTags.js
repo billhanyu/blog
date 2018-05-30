@@ -28,7 +28,7 @@ function renderInput(inputProps) {
 function getSuggestions(inputValue, suggestions) {
   let count = 0;
 
-  return suggestions.filter(suggestion => {
+  const res = suggestions.filter(suggestion => {
     const keep =
       (!inputValue || suggestion.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1) &&
       count < 5;
@@ -39,6 +39,12 @@ function getSuggestions(inputValue, suggestions) {
 
     return keep;
   });
+
+  if (!res.includes(inputValue) && inputValue) {
+    res.splice(0, 0, inputValue);
+  }
+
+  return res;
 }
 
 class EditTags extends Component {
@@ -46,7 +52,6 @@ class EditTags extends Component {
     super(props);
     this.state = {
       inputValue: '',
-      tagList: [],
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -54,11 +59,10 @@ class EditTags extends Component {
   }
 
   handleKeyDown(event) {
-    const { inputValue, tagList } = this.state;
+    const { inputValue } = this.state;
+    const tagList = this.props.tagList;
     if (tagList.length && !inputValue.length && keycode(event) === 'backspace') {
-      this.setState({
-        tagList: tagList.slice(0, tagList.length - 1),
-      });
+      this.props.stripLastTag();
     }
   };
 
@@ -67,28 +71,15 @@ class EditTags extends Component {
   };
 
   handleChange(item) {
-    let { tagList } = this.state;
-
-    if (tagList.indexOf(item) === -1) {
-      tagList = [...tagList, item];
-    }
-
+    this.props.handleChange(item);
     this.setState({
       inputValue: '',
-      tagList,
     });
   };
 
-  handleDelete(item) {
-    const tagList = [...this.state.tagList];
-    tagList.splice(tagList.indexOf(item), 1);
-
-    this.setState({ tagList });
-  };
-
   render() {
-    const { classes, all } = this.props;
-    const { inputValue, tagList } = this.state;
+    const { classes, all, tagList } = this.props;
+    const { inputValue } = this.state;
 
     return (
       <div className={classes.root}>
@@ -149,6 +140,8 @@ EditTags.propTypes = {
   classes: PropTypes.object.isRequired,
   all: PropTypes.array,
   tagList: PropTypes.array,
+  handleChange: PropTypes.func,
+  stripLastTag: PropTypes.func,
 };
 
 const styles = theme => ({

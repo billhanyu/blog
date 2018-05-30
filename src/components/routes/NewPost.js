@@ -15,9 +15,9 @@ class NewPost extends Component {
     this.submitted = false;
   }
 
-  onSubmit(title, body) {
+  onSubmit(title, body, tagList) {
     this.submitted = true;
-    this.props.submitPost(title, body);
+    this.props.submitPost(title, body, tagList);
   }
 
   componentWillReceiveProps(newProps) {
@@ -47,7 +47,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    submitPost: (title, body) => dispatch(submitPost(title, body)),
+    submitPost: (title, body, tagList) => dispatch(submitPost(title, body, tagList)),
   };
 };
 

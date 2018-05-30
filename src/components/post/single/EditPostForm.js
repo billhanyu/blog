@@ -19,13 +19,16 @@ class EditPostForm extends Component {
     this.state = {
       title: props.title,
       body: props.body,
-      tagList: props.tagList,
+      tagList: props.tagList || [],
       titleErrorText: '',
       bodyErrorText: '',
     };
     this.onChangeTitle = this.onChangeTitle.bind(this);
     this.onChangeBody = this.onChangeBody.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.stripLastTag = this.stripLastTag.bind(this);
   }
 
   componentWillMount() {
@@ -47,7 +50,7 @@ class EditPostForm extends Component {
   }
 
   onSubmit() {
-    const { title, body } = this.state;
+    const { title, body, tagList } = this.state;
     if (!title) {
       this.setState({
         titleErrorText: 'Title is required.',
@@ -59,8 +62,35 @@ class EditPostForm extends Component {
       });
     }
     if (title && body) {
-      this.props.onSubmit(title, body);
+      this.props.onSubmit(title, body, tagList);
     }
+  }
+
+  handleChange(item) {
+    let { tagList } = this.state;
+
+    if (tagList.indexOf(item) === -1) {
+      tagList = [...tagList, item];
+    }
+
+    this.setState({
+      inputValue: '',
+      tagList,
+    });
+  };
+
+  handleDelete(item) {
+    const tagList = [...this.state.tagList];
+    tagList.splice(tagList.indexOf(item), 1);
+
+    this.setState({ tagList });
+  };
+
+  stripLastTag() {
+    const tagList = this.state.tagList;
+    this.setState({
+      tagList: tagList.slice(0, tagList.length - 1),
+    });
   }
 
   render() {
@@ -88,8 +118,11 @@ class EditPostForm extends Component {
                 error={this.state.titleErrorText !== ''}
               />
               <EditTags
-                tagList={this.props.tagList}
+                tagList={this.state.tagList}
                 all={this.props.all}
+                handleChange={this.handleChange}
+                handleDelete={this.handleDelete}
+                stripLastTag={this.stripLastTag}
               />
               <TextField
                 style={{

@@ -146,12 +146,13 @@ export function postComment(slug, body) {
   };
 }
 
-export function submitPost(title, body) {
+export function submitPost(title, body, tagList) {
   return (dispatch, getState) => {
     dispatch({ type: REQUEST_SUBMIT_POST });
     instance.post(`/posts`, {
       title,
       body,
+      tagList,
     }, {
         headers: { Authorization: 'Bearer ' + getState().user.token },
       })
@@ -166,12 +167,13 @@ export function submitPost(title, body) {
   };
 }
 
-export function editPost(slug, title, body) {
+export function editPost(slug, title, body, tagList) {
   return (dispatch, getState) => {
     dispatch({ type: REQUEST_EDIT_POST });
     instance.put(`/posts/${slug}`, {
       title,
       body,
+      tagList,
     }, {
         headers: { Authorization: 'Bearer ' + getState().user.token },
       })
