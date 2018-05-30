@@ -10,6 +10,7 @@ import TagSelection from '../post/tags/TagSelection';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Fade from '@material-ui/core/Fade';
+const qs = require('querystring');
 
 const styles = {
   root: {
@@ -18,8 +19,38 @@ const styles = {
 };
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tagsToFilter: [],
+    };
+  }
+
   componentWillMount() {
-    this.props.getAllPosts();
+    this.filterWithTags(this.props);
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.location.search !== this.props.location.search) {
+      this.filterWithTags(newProps);
+    }
+  }
+
+  filterWithTags(props) {
+    const query = props.location.search;
+    let tagsToFilter = [];
+    if (query.length > 1) {
+      const tagsInQuery = qs.parse(query.substring(1)).tags;
+      try {
+        tagsToFilter = JSON.parse(tagsInQuery);
+      } catch (e) {
+        tagsToFilter = [tagsInQuery.toString()];
+      }
+    }
+    props.getAllPosts(tagsToFilter);
+    this.setState({
+      tagsToFilter,
+    });
   }
 
   render() {
@@ -45,7 +76,9 @@ class Home extends Component {
               </Fade>
             </Grid>
             <Grid item xs={12} sm={3}>
-              <TagSelection />
+              <TagSelection
+                tagsToFilter={this.state.tagsToFilter}
+              />
             </Grid>
           </Grid>
         </div>
@@ -60,6 +93,7 @@ Home.propTypes = {
   error: PropTypes.string,
   getAllPosts: PropTypes.func,
   classes: PropTypes.object,
+  location: PropTypes.object,
 };
 
 const mapStateToProps = state => {
@@ -72,7 +106,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllPosts: () => dispatch(getAllPosts()),
+    getAllPosts: tags => dispatch(getAllPosts(tags)),
   };
 };
 

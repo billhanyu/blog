@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import EditPostButton from './../buttons/EditPostButton';
 import DeletePostButton from './../buttons/DeletePostButton';
 import ShareButtons from './ShareButtons';
+import TagList from './TagList';
 
 class PostCard extends Component {
   render() {
@@ -19,6 +20,7 @@ class PostCard extends Component {
       title,
       slug,
       body,
+      tagList,
       author,
       createdAt,
       updatedAt,
@@ -47,6 +49,7 @@ class PostCard extends Component {
           <PostBody body={body} />
         </CardContent>
         <CardContent>
+          <TagList tagList={tagList} />
           <TimeStamps createdAt={createdAt} updatedAt={updatedAt} />
         </CardContent>
         <CardContent style={{marginTop: -20}}>
