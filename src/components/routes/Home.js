@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import NavigationMenu from '../NavigationMenu';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getAllPosts } from '../../actions/actions';
+import { addFilterTags, removeFilterTags } from '../../actions/actions';
 import ErrorDisplay from '../common/ErrorDisplay';
 import Loading from '../common/Loading';
 import PostList from '../post/PostList';
@@ -21,9 +21,6 @@ const styles = {
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      tagsToFilter: [],
-    };
   }
 
   componentWillMount() {
@@ -47,10 +44,8 @@ class Home extends Component {
         tagsToFilter = [tagsInQuery.toString()];
       }
     }
-    props.getAllPosts(tagsToFilter);
-    this.setState({
-      tagsToFilter,
-    });
+    this.props.removeFilterTags(this.props.selected);
+    this.props.addFilterTags(tagsToFilter);
   }
 
   render() {
@@ -76,9 +71,7 @@ class Home extends Component {
               </Fade>
             </Grid>
             <Grid item xs={12} sm={3}>
-              <TagSelection
-                tagsToFilter={this.state.tagsToFilter}
-              />
+              <TagSelection />
             </Grid>
           </Grid>
         </div>
@@ -91,9 +84,11 @@ Home.propTypes = {
   all: PropTypes.array,
   ready: PropTypes.bool,
   error: PropTypes.string,
-  getAllPosts: PropTypes.func,
   classes: PropTypes.object,
   location: PropTypes.object,
+  addFilterTags: PropTypes.func,
+  removeFilterTags: PropTypes.func,
+  selected: PropTypes.array,
 };
 
 const mapStateToProps = state => {
@@ -101,12 +96,14 @@ const mapStateToProps = state => {
     all: state.posts.all,
     ready: state.posts.ready,
     error: state.posts.error,
+    selected: state.tags.selected,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllPosts: tags => dispatch(getAllPosts(tags)),
+    addFilterTags: tags => dispatch(addFilterTags(tags)),
+    removeFilterTags: tags => dispatch(removeFilterTags(tags)),
   };
 };
 

@@ -20,6 +20,7 @@ import {
   TOKEN_FROM_COOKIE,
   LOGOUT,
   RECEIVE_TAGS,
+  UPDATE_FILTER_TAGS,
 } from './actionTypes';
 import { baseURL } from '../config';
 const NETWORK_ERROR = 'Network Error';
@@ -220,5 +221,30 @@ export function requestTags() {
       .catch(err => {
         dispatch({ type: RECEIVE_TAGS, payload: { error: getMessageFromErr(err) || NETWORK_ERROR } });
       });
+  };
+}
+
+export function addFilterTags(tags) {
+  return (dispatch, getState) => {
+    const selected = getState().tags.selected.slice();
+    tags.forEach(tag => {
+      if (!selected.includes(tag)) {
+        selected.push(tag);
+      }
+    });
+    dispatch(getAllPosts(selected));
+    dispatch({ type: UPDATE_FILTER_TAGS, payload: selected });
+  };
+}
+
+export function removeFilterTags(tags) {
+  return (dispatch, getState) => {
+    const selected = getState().tags.selected.slice();
+    tags.forEach(tag => {
+      const index = selected.indexOf(tag);
+      selected.splice(index, 1);
+    });
+    dispatch(getAllPosts(selected));
+    dispatch({ type: UPDATE_FILTER_TAGS, payload: selected });
   };
 }

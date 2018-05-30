@@ -5,7 +5,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { connect } from 'react-redux';
-import { requestTags, getAllPosts } from '../../../actions/actions';
+import { requestTags, addFilterTags, removeFilterTags } from '../../../actions/actions';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
@@ -25,7 +25,6 @@ const styles = theme => ({
 class TagSelection extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
   componentWillMount() {
@@ -33,12 +32,12 @@ class TagSelection extends Component {
   }
 
   handleChange(name, event) {
-    this.setState({
-      [name]: event.target.checked,
-    }, () => {
-      const tags = Object.keys(this.state).filter(key => this.state[key]);
-      this.props.getAllPosts(tags);
-    });
+    const checked = event.target.checked;
+    if (checked) {
+      this.props.addFilterTag(name);
+    } else {
+      this.props.removeFilterTag(name);
+    }
   }
 
   render() {
@@ -55,7 +54,7 @@ class TagSelection extends Component {
                     key={idx}
                     control={
                       <Checkbox
-                        checked={this.state[tag]}
+                        checked={this.props.selected.includes(tag)}
                         onChange={e => this.handleChange(tag, e)}
                         value={tag}
                       />
@@ -81,15 +80,18 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     requestTags: () => dispatch(requestTags()),
-    getAllPosts: tags => dispatch(getAllPosts(tags)),
+    addFilterTag: tag => dispatch(addFilterTags([tag])),
+    removeFilterTag: tag => dispatch(removeFilterTags([tag])),
   };
 };
 
 TagSelection.propTypes = {
   all: PropTypes.array,
+  selected: PropTypes.array,
   requestTags: PropTypes.func,
-  getAllPosts: PropTypes.func,
   classes: PropTypes.object,
+  addFilterTag: PropTypes.func,
+  removeFilterTag: PropTypes.func,
 };
 
 export default compose(withStyles(styles), withWidth())(connect(mapStateToProps, mapDispatchToProps)(TagSelection));

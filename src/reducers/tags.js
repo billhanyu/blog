@@ -1,4 +1,7 @@
-import { RECEIVE_TAGS } from '../actions/actionTypes';
+import {
+  RECEIVE_TAGS,
+  UPDATE_FILTER_TAGS,
+} from '../actions/actionTypes';
 
 function tags(state={
   all: [],
@@ -10,6 +13,11 @@ function tags(state={
         ...state,
         all: action.payload.tags,
         error: action.payload.error,
+      };
+    case UPDATE_FILTER_TAGS:
+      return {
+        ...state,
+        selected: action.payload,
       };
     default:
       return state;
