@@ -14,7 +14,7 @@ class TagList extends Component {
                 key={index}
                 href='javascript:void(0)'
                 onClick={() => {
-                  this.props.history.push(`?tags=${tag}`);
+                  this.props.history.push(`/?tags=${tag}`);
                 }}
               >
                 {tag}
