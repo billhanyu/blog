@@ -5,11 +5,13 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { connect } from 'react-redux';
-import { requestTags, addFilterTags, removeFilterTags } from '../../../actions/actions';
+import { requestTags, updateFilterTags } from '../../../actions/actions';
+import { addFilterTag, removeFilterTag } from './ProcessTags';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
 import { withStyles } from '@material-ui/core/styles';
 import withWidth from '@material-ui/core/withWidth';
+import { withRouter } from 'react-router-dom';
 
 const styles = theme => ({
   tags: {
@@ -33,11 +35,13 @@ class TagSelection extends Component {
 
   handleChange(name, event) {
     const checked = event.target.checked;
+    let tags = [];
     if (checked) {
-      this.props.addFilterTag(name);
+      tags = addFilterTag(name, this.props.selected);
     } else {
-      this.props.removeFilterTag(name);
+      tags = removeFilterTag(name, this.props.selected);
     }
+    this.props.history.replace(`/?tags=${JSON.stringify(tags)}`);
   }
 
   render() {
@@ -80,8 +84,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     requestTags: () => dispatch(requestTags()),
-    addFilterTag: tag => dispatch(addFilterTags([tag])),
-    removeFilterTag: tag => dispatch(removeFilterTags([tag])),
+    updateFilterTags: tags => dispatch(updateFilterTags(tags)),
   };
 };
 
@@ -90,8 +93,8 @@ TagSelection.propTypes = {
   selected: PropTypes.array,
   requestTags: PropTypes.func,
   classes: PropTypes.object,
-  addFilterTag: PropTypes.func,
-  removeFilterTag: PropTypes.func,
+  updateFilterTags: PropTypes.func,
+  history: PropTypes.object,
 };
 
-export default compose(withStyles(styles), withWidth())(connect(mapStateToProps, mapDispatchToProps)(TagSelection));
+export default withRouter(compose(withStyles(styles), withWidth())(connect(mapStateToProps, mapDispatchToProps)(TagSelection)));

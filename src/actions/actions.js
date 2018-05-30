@@ -224,27 +224,9 @@ export function requestTags() {
   };
 }
 
-export function addFilterTags(tags) {
+export function updateFilterTags(tags) {
   return (dispatch, getState) => {
-    const selected = getState().tags.selected.slice();
-    tags.forEach(tag => {
-      if (!selected.includes(tag)) {
-        selected.push(tag);
-      }
-    });
-    dispatch(getAllPosts(selected));
-    dispatch({ type: UPDATE_FILTER_TAGS, payload: selected });
-  };
-}
-
-export function removeFilterTags(tags) {
-  return (dispatch, getState) => {
-    const selected = getState().tags.selected.slice();
-    tags.forEach(tag => {
-      const index = selected.indexOf(tag);
-      selected.splice(index, 1);
-    });
-    dispatch(getAllPosts(selected));
-    dispatch({ type: UPDATE_FILTER_TAGS, payload: selected });
+    dispatch(getAllPosts(tags));
+    dispatch({ type: UPDATE_FILTER_TAGS, payload: tags });
   };
 }

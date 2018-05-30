@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import NavigationMenu from '../NavigationMenu';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addFilterTags, removeFilterTags } from '../../actions/actions';
+import { updateFilterTags } from '../../actions/actions';
 import ErrorDisplay from '../common/ErrorDisplay';
 import Loading from '../common/Loading';
 import PostList from '../post/PostList';
@@ -44,8 +44,7 @@ class Home extends Component {
         tagsToFilter = [tagsInQuery.toString()];
       }
     }
-    this.props.removeFilterTags(this.props.selected);
-    this.props.addFilterTags(tagsToFilter);
+    this.props.updateFilterTags(tagsToFilter);
   }
 
   render() {
@@ -86,8 +85,7 @@ Home.propTypes = {
   error: PropTypes.string,
   classes: PropTypes.object,
   location: PropTypes.object,
-  addFilterTags: PropTypes.func,
-  removeFilterTags: PropTypes.func,
+  updateFilterTags: PropTypes.func,
   selected: PropTypes.array,
 };
 
@@ -102,8 +100,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addFilterTags: tags => dispatch(addFilterTags(tags)),
-    removeFilterTags: tags => dispatch(removeFilterTags(tags)),
+    updateFilterTags: tags => dispatch(updateFilterTags(tags)),
   };
 };
 
