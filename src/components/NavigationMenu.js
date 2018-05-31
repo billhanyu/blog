@@ -131,7 +131,15 @@ class NavigationMenu extends Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant='title' color='inherit' className={classes.flex}>
+            <Typography
+              variant='title'
+              color='inherit'
+              className={classes.flex}
+              style={{cursor: 'pointer'}}
+              onClick={() => {
+                this.props.history.push('/');
+              }}
+            >
               {blogName}
             </Typography>
             {this.props.token ? <Logged /> : <LogInButton />}
