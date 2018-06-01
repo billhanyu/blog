@@ -86,7 +86,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     requestTags: () => dispatch(requestTags()),
-    updateFilterTags: tags => dispatch(updateTagsAndPage({ tags })),
+    updateFilterTags: tags => dispatch(updateTagsAndPage(tags, 1)),
   };
 };
 

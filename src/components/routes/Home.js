@@ -36,15 +36,20 @@ class Home extends Component {
   filterAndPagination(props) {
     const query = props.location.search;
     let tagsToFilter = [];
+    let pageInQuery = 1;
     if (query.length > 1) {
-      const tagsInQuery = qs.parse(query.substring(1)).tags;
-      try {
-        tagsToFilter = JSON.parse(tagsInQuery);
-      } catch (e) {
-        tagsToFilter = [tagsInQuery.toString()];
+      const queryObj = qs.parse(query.substring(1));
+      const tagsInQuery = queryObj.tags;
+      pageInQuery = queryObj.page || 1;
+      if (tagsInQuery) {
+        try {
+          tagsToFilter = JSON.parse(tagsInQuery);
+        } catch (e) {
+          tagsToFilter = [tagsInQuery.toString()];
+        }
       }
     }
-    this.props.updateFilterTags(tagsToFilter);
+    this.props.updateTagsAndPage(tagsToFilter, pageInQuery);
   }
 
   render() {
@@ -85,7 +90,7 @@ Home.propTypes = {
   error: PropTypes.string,
   classes: PropTypes.object,
   location: PropTypes.object,
-  updateFilterTags: PropTypes.func,
+  updateTagsAndPage: PropTypes.func,
   selected: PropTypes.array,
 };
 
@@ -100,7 +105,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateFilterTags: tags => dispatch(updateTagsAndPage({ tags })),
+    updateTagsAndPage: (tags, page) => dispatch(updateTagsAndPage(tags, page)),
   };
 };
 

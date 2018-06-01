@@ -228,22 +228,7 @@ export function requestTags() {
   };
 }
 
-export function updateFilterTags(tags) {
-  return (dispatch, getState) => {
-    dispatch(getAllPosts(tags, 1));
-    dispatch({ type: UPDATE_PAGE, payload: 1});
-    dispatch({ type: UPDATE_FILTER_TAGS, payload: tags });
-  };
-}
-
-export function updatePage(page) {
-  return (dispatch, getState) => {
-    dispatch(getAllPosts(tags, page));
-    dispatch({ type: UPDATE_PAGE, payload: page });
-  };
-}
-
-export function updateTagsAndPage({tags=[], page=1}) {
+export function updateTagsAndPage(tags=[], page=1) {
   return (dispatch, getState) => {
     dispatch(getAllPosts(tags, page));
     dispatch({ type: UPDATE_PAGE, payload: page });
