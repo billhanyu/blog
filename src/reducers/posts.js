@@ -15,6 +15,7 @@ function posts(state={
   current: {},
   all: [],
   page: 1,
+  pages: 1,
   new: {
     slug: '',
     success: false,
@@ -43,6 +44,7 @@ function posts(state={
       return {
         ...state,
         all: action.payload.posts || [],
+        pages: action.payload.pages || 1,
         ready: true,
         error: action.payload.error,
       };

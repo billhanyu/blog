@@ -4,6 +4,7 @@ module.exports = {
   blogName: 'Bill Yu\'s Blog',
   githubLink: 'https://github.com/billhanyu/',
   pageCount: 2,
+  paginationDisplayCount: 5,
   baseURL: `${siteURL}:1717`,
   siteURL,
 };

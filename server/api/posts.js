@@ -36,24 +36,29 @@ router.param('comment', (req, res, next, id) => {
 // get posts
 // query params: limit, offset, tagList
 router.get('/', auth.none, (req, res, next) => {
-  const limit = req.query.limit || 20;
-  const offset = req.query.offset || 0;
+  const limit = Number(req.query.limit || 20);
+  const offset = Number(req.query.offset || 0);
   const query = {};
   if (req.query.tagList) {
     const tagList = JSON.parse(req.query.tagList);
     query.tagList = { '$in': tagList };
   }
 
+  const ret = {};
+
   Post.find(query)
-    .skip(Number(offset))
-    .limit(Number(limit))
+    .skip(offset)
+    .limit(limit)
     .sort({ createdAt: 'desc' })
     .populate('author')
     .exec()
     .then(posts => {
-      res.json({
-        posts: posts.map(post => post.toJSONFor(req.user)),
-      });
+      ret.posts = posts.map(post => post.toJSONFor(req.user));
+      return Post.count(query).exec();
+    })
+    .then(count => {
+      ret.pages = Math.ceil(count / limit);
+      res.json(ret);
     })
     .catch(next);
 });

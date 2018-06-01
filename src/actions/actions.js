@@ -97,7 +97,7 @@ export function getPost(slug) {
   };
 }
 
-export function getAllPosts(tags, page) {
+function getAllPosts(tags, page) {
   return (dispatch, getState) => {
     dispatch({ type: REQUEST_ALL_POSTS, payload: {} });
     const body = {

@@ -59,6 +59,32 @@ describe('posts', () => {
         });
     });
 
+    it('should be able to get number of pages', done => {
+      chai.request(server)
+        .get('/posts/?limit=1')
+        .set({ Authorization: 'Bearer ' + adminToken })
+        .end((err, res) => {
+          res.should.have.status(200);
+          assert.equal(res.body.pages, 2);
+          done();
+        });
+    });
+
+    it('should be able to get number of pages with tag filtering', done => {
+      chai.request(server)
+        .get('/posts')
+        .query({
+          limit: 1,
+          tagList: JSON.stringify(['tag2']),
+        })
+        .set({ Authorization: 'Bearer ' + adminToken })
+        .end((err, res) => {
+          res.should.have.status(200);
+          assert.equal(res.body.pages, 1);
+          done();
+        });
+    });
+
     it('should be able to filter by tags', done => {
       chai.request(server)
         .get('/posts')

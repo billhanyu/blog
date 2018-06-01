@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import PostCard from './single/PostCard';
+import PostPagination from './PostPagination';
 
 class PostList extends Component {
   render() {
@@ -16,6 +17,7 @@ class PostList extends Component {
             );
           })
         }
+        <PostPagination />
       </div>
     );
   }
