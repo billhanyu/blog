@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import NavigationMenu from '../NavigationMenu';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { updateFilterTags } from '../../actions/actions';
+import { updateTagsAndPage } from '../../actions/actions';
 import ErrorDisplay from '../common/ErrorDisplay';
 import Loading from '../common/Loading';
 import PostList from '../post/PostList';
@@ -24,16 +24,16 @@ class Home extends Component {
   }
 
   componentWillMount() {
-    this.filterWithTags(this.props);
+    this.filterAndPagination(this.props);
   }
 
   componentWillReceiveProps(newProps) {
     if (newProps.location.search !== this.props.location.search) {
-      this.filterWithTags(newProps);
+      this.filterAndPagination(newProps);
     }
   }
 
-  filterWithTags(props) {
+  filterAndPagination(props) {
     const query = props.location.search;
     let tagsToFilter = [];
     if (query.length > 1) {
@@ -100,7 +100,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateFilterTags: tags => dispatch(updateFilterTags(tags)),
+    updateFilterTags: tags => dispatch(updateTagsAndPage({ tags })),
   };
 };
 

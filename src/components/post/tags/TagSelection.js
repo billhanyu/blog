@@ -5,7 +5,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { connect } from 'react-redux';
-import { requestTags, updateFilterTags } from '../../../actions/actions';
+import { requestTags, updateTagsAndPage } from '../../../actions/actions';
 import { addFilterTag, removeFilterTag } from './ProcessTags';
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
@@ -86,7 +86,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     requestTags: () => dispatch(requestTags()),
-    updateFilterTags: tags => dispatch(updateFilterTags(tags)),
+    updateFilterTags: tags => dispatch(updateTagsAndPage({ tags })),
   };
 };
 

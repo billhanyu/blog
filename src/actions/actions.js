@@ -21,8 +21,9 @@ import {
   LOGOUT,
   RECEIVE_TAGS,
   UPDATE_FILTER_TAGS,
+  UPDATE_PAGE,
 } from './actionTypes';
-import { baseURL } from '../config';
+import { baseURL, pageCount } from '../config';
 const NETWORK_ERROR = 'Network Error';
 
 const instance = axios.create({
@@ -96,14 +97,17 @@ export function getPost(slug) {
   };
 }
 
-export function getAllPosts(tags) {
+export function getAllPosts(tags, page) {
   return (dispatch, getState) => {
     dispatch({ type: REQUEST_ALL_POSTS, payload: {} });
     const body = {
       params: {
-        limit: Number.MAX_SAFE_INTEGER,
+        limit: pageCount,
       },
     };
+    if (page) {
+      body.params.offset = (page - 1) * pageCount;
+    }
     if (tags && tags.length > 0) {
       body.params.tagList = JSON.stringify(tags);
     }
@@ -226,7 +230,23 @@ export function requestTags() {
 
 export function updateFilterTags(tags) {
   return (dispatch, getState) => {
-    dispatch(getAllPosts(tags));
+    dispatch(getAllPosts(tags, 1));
+    dispatch({ type: UPDATE_PAGE, payload: 1});
+    dispatch({ type: UPDATE_FILTER_TAGS, payload: tags });
+  };
+}
+
+export function updatePage(page) {
+  return (dispatch, getState) => {
+    dispatch(getAllPosts(tags, page));
+    dispatch({ type: UPDATE_PAGE, payload: page });
+  };
+}
+
+export function updateTagsAndPage({tags=[], page=1}) {
+  return (dispatch, getState) => {
+    dispatch(getAllPosts(tags, page));
+    dispatch({ type: UPDATE_PAGE, payload: page });
     dispatch({ type: UPDATE_FILTER_TAGS, payload: tags });
   };
 }

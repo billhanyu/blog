@@ -8,11 +8,13 @@ import {
   RECEIVE_DELETE_POST,
   REQUEST_EDIT_POST,
   RECEIVE_EDIT_POST,
+  UPDATE_PAGE,
 } from '../actions/actionTypes';
 
 function posts(state={
   current: {},
   all: [],
+  page: 1,
   new: {
     slug: '',
     success: false,
@@ -87,6 +89,11 @@ function posts(state={
         delete: {
           success: !action.payload.error,
         },
+      };
+    case UPDATE_PAGE:
+      return {
+        ...state,
+        page: action.payload,
       };
     default:
       return state;
