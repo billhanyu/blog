@@ -41,7 +41,9 @@ class TagSelection extends Component {
     } else {
       tags = removeFilterTag(name, this.props.selected);
     }
-    this.props.history.replace(`/?tags=${JSON.stringify(tags)}`);
+    this.props.history.push(tags.length > 0
+      ? `/?tags=${JSON.stringify(tags)}`
+      : '/');
   }
 
   render() {
