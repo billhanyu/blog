@@ -18,6 +18,4 @@ COPY . .
 
 RUN npm run build
 
-RUN cp -a /app/dist/* /usr/share/nginx/html
-
 RUN cp /app/nginx.conf /etc/nginx/
