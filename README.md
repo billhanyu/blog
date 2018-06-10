@@ -49,6 +49,7 @@ Frontend hot reloading is enabled!
 ## Articles Referenced
 
 - [User Auth Using MongoDB and MEAN Stack](https://www.sitepoint.com/user-authentication-mean-stack/)
+- [Use NGINX As A Reverse Proxy To Your Containerized Docker Applications](https://www.thepolyglotdeveloper.com/2017/03/nginx-reverse-proxy-containerized-docker-applications/)
 
 ## Thanks
 
