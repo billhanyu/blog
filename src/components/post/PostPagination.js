@@ -19,16 +19,26 @@ class PostPagination extends Component {
     return (
       <div
         style={{
-          width: 500,
-          margin: '0 auto',
+          position: 'relative',
+          float: 'left',
+          clear: 'both',
+          left: '50%',
         }}
       >
-        <Pagination
-          total={this.props.posts.pages}
-          current={this.props.posts.page}
-          display={paginationDisplayCount}
-          onChange={this.changePage}
-        />
+        <div
+          style={{
+            position: 'relative',
+            float: 'left',
+            left: '-50%',
+          }}
+        >
+          <Pagination
+            total={this.props.posts.pages}
+            current={this.props.posts.page}
+            display={paginationDisplayCount}
+            onChange={this.changePage}
+          />
+        </div>
       </div>
     );
   }
